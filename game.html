@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dark Pool Cipher — Game Board</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* Additional styles for exit button and layouts in game.html */
+    .btn-exit {
+      padding: 6px 14px;
+      border: 1.5px solid rgba(255,255,255,.25);
+      border-radius: 10px;
+      background: rgba(255,245,210,.1);
+      color: rgba(255,225,140,.85);
+      font-family: 'Inter', sans-serif;
+      font-size: .78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s, border-color .2s;
+    }
+    .btn-exit:hover {
+      background: rgba(255,245,210,.25);
+      border-color: rgba(255,245,210,.5);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── INTRO OVERLAY ──────────────────────────────────────── -->
+  <div class="overlay" id="introOverlay">
+    
+    <!-- Welcome Card -->
+    <div class="overlay-card" id="welcomeCard">
+      <div class="brand-logo">
+        <span class="logo-hex">⬡</span>
+        <h1 id="gameModeTitle">Dark Pool Cipher</h1>
+      </div>
+      <p class="brand-tagline">
+        Find 7 target words hidden in the grid by dragging your cursor. 
+        But beware — the background letters scramble every 5 seconds!
+      </p>
+      <div class="overlay-actions">
+        <button class="btn btn-ghost btn-lg" id="goInstructBtn">How To Play</button>
+        <button class="btn btn-primary btn-lg" id="playBtn">
+          Start Game <span class="btn-arrow">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Instructions Card -->
+    <div class="overlay-card hidden" id="instructCard">
+      <h2 class="card-title">How to Play</h2>
+      
+      <div class="how-grid">
+        <div class="how-item">
+          <span class="how-icon">🖱️</span>
+          <div>
+            <strong>Drag & Select</strong>
+            <p>Click/touch and drag across adjacent letters in any of the 8 directions.</p>
+          </div>
+        </div>
+        <div class="how-item">
+          <span class="how-icon">🌪️</span>
+          <div>
+            <strong>Adaptive Matrix</strong>
+            <p>Non-target letters shift every 5 seconds. Target words stay in place.</p>
+          </div>
+        </div>
+        <div class="how-item">
+          <span class="how-icon">👁️</span>
+          <div>
+            <strong>Sidebar List</strong>
+            <p>Classic mode shows all words. Hidden mode keeps them hidden until found.</p>
+          </div>
+        </div>
+        <div class="how-item">
+          <span class="how-icon">💡</span>
+          <div>
+            <strong>Pro Hints</strong>
+            <p>Stuck? Click Hint to flash the first letter of an unfound word on the board.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="overlay-actions">
+        <button class="btn btn-secondary" id="backBtn">Back</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── GAMEPLAY SCREEN ───────────────────────────────────── -->
+  <div class="hidden" id="gameScreen">
+    
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="topbar-brand">
+        <button class="btn-exit" id="exitToMenuBtn">← Main Menu</button>
+        <span class="topbar-title" id="gameModeLabel">Dark Pool Cipher</span>
+      </div>
+      
+      <div class="topbar-stats">
+        <div class="stat-chip">
+          <span class="stat-label">Attempts</span>
+          <span class="stat-value" id="attemptsVal">0</span>
+        </div>
+        <div class="stat-chip">
+          <span class="stat-label">Hints</span>
+          <span class="stat-value" id="hintsVal">3</span>
+        </div>
+        <div class="stat-chip accent">
+          <span class="stat-label">Points</span>
+          <span class="stat-value" id="pointsVal">0</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Game Layout -->
+    <div class="game-layout">
+      
+      <!-- Word list sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <span class="sidebar-title">Words to Find</span>
+          <span class="progress-pill" id="progressPill">0 / 7</span>
+        </div>
+        
+        <ul class="word-list" id="wordList">
+          <!-- Populated by script.js -->
+        </ul>
+
+        <div class="sidebar-footer">
+          <button class="btn btn-secondary btn-full" id="hintBtn">
+            💡 Use Hint <span class="hint-badge" id="hintCount">3</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Grid board -->
+      <div class="board-wrap">
+        <div class="board" id="board" role="grid">
+          <!-- Cells created dynamically -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── WIN OVERLAY ────────────────────────────────────────── -->
+  <div class="overlay hidden" id="winOverlay">
+    <div class="overlay-card win-card">
+      <div class="win-trophy">👑</div>
+      <h2 class="win-title">Victory!</h2>
+      <p class="win-sub">You successfully decrypted the cipher matrix.</p>
+
+      <div class="win-stats">
+        <div class="win-stat">
+          <span class="win-stat-label">Final Score</span>
+          <span class="win-stat-value" id="finalPoints">0 pts</span>
+        </div>
+        <div class="win-stat">
+          <span class="win-stat-label">Attempts</span>
+          <span class="win-stat-value" id="finalAttempts">0</span>
+        </div>
+        <div class="win-stat">
+          <span class="win-stat-label">Hints Used</span>
+          <span class="win-stat-value" id="finalHints">0 / 3</span>
+        </div>
+      </div>
+
+      <div class="overlay-actions">
+        <button class="btn btn-ghost" id="menuBtn">Main Menu</button>
+        <button class="btn btn-primary" id="playAgainBtn">Play Again</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HINT POPUP ─────────────────────────────────────────── -->
+  <div class="popup-overlay hidden" id="hintPopup">
+    <div class="popup-card">
+      <div class="popup-icon">💡</div>
+      <h3>Cipher Hint</h3>
+      <p id="hintMsg">The first letter is highlighted on the grid.</p>
+      <button class="btn btn-primary btn-full" id="closeHintBtn">Got it</button>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

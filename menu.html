@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dark Pool Cipher — Choose Mode</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="menu.css"/>
+</head>
+<body class="menu-body">
+
+  <div class="menu-bg"></div>
+
+  <!-- Top bar -->
+  <header class="menu-topbar">
+    <div class="menu-brand">
+      <span class="logo-hex">⬡</span>
+      <span class="menu-brand-name">Dark Pool Cipher</span>
+    </div>
+    <div class="menu-user" id="menuUser">
+      <div class="user-avatar" id="userAvatar">?</div>
+      <span class="user-name" id="userName">Player</span>
+      <button class="btn-signout" id="signoutBtn" title="Sign out">⎋ Sign Out</button>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="menu-main">
+    <div class="menu-heading">
+      <h2 class="menu-pick">Choose Your Game Mode</h2>
+      <p class="menu-pick-sub">Select how you want to play today.</p>
+    </div>
+
+    <div class="mode-grid">
+
+      <!-- Classic Mode -->
+      <div class="mode-card" id="modeClassic" tabindex="0" role="button" aria-label="Play Classic mode">
+        <div class="mode-icon">🔍</div>
+        <div class="mode-badge">Solo</div>
+        <h3 class="mode-name">Classic</h3>
+        <p class="mode-desc">
+          All <strong>7 target words</strong> are shown in the sidebar.
+          Drag across the grid to find and highlight each one.
+        </p>
+        <ul class="mode-features">
+          <li>✅ Words visible from start</li>
+          <li>✅ 3 hints per game</li>
+          <li>✅ Background shuffles every 5 s</li>
+        </ul>
+        <button class="btn btn-mode btn-classic">Play Classic →</button>
+      </div>
+
+      <!-- Hidden Mode -->
+      <div class="mode-card" id="modeHidden" tabindex="0" role="button" aria-label="Play Hidden mode">
+        <div class="mode-icon">🕵️</div>
+        <div class="mode-badge mode-badge-hard">Challenge</div>
+        <h3 class="mode-name">Hidden Words</h3>
+        <p class="mode-desc">
+          <strong>7 words are hidden</strong> — no sidebar list.
+          Discover them by dragging; each find gets revealed.
+        </p>
+        <ul class="mode-features">
+          <li>🔒 Words hidden until found</li>
+          <li>✅ Hint flashes first letter</li>
+          <li>🔥 Harder, more satisfying</li>
+        </ul>
+        <button class="btn btn-mode btn-hidden">Play Hidden →</button>
+      </div>
+
+      <!-- Multiplayer Mode -->
+      <div class="mode-card mode-card-multi" id="modeMulti" tabindex="0" role="button" aria-label="Play Multiplayer mode">
+        <div class="mode-icon">⚔️</div>
+        <div class="mode-badge mode-badge-multi">Multiplayer</div>
+        <h3 class="mode-name">Battle Room</h3>
+        <p class="mode-desc">
+          Create a room or join with a code.
+          Race friends to find all words first!
+        </p>
+        <ul class="mode-features">
+          <li>👥 2–6 players</li>
+          <li>💬 In-room chat + emojis</li>
+          <li>🏆 First to finish wins</li>
+        </ul>
+        <button class="btn btn-mode btn-multi">Play Multiplayer →</button>
+      </div>
+
+    </div><!-- /mode-grid -->
+  </main>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="menu.js"></script>
+</body>
+</html>

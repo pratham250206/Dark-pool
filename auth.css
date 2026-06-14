@@ -1,0 +1,256 @@
+/* ═══════════════════════════════════════════════
+   auth.css  — Login / Sign-up page styles
+   Wood theme · Glassmorphism card
+═══════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+.auth-body {
+  font-family: 'Inter', sans-serif;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+/* ── Wood background ── */
+.auth-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(30,12,0,.55) 100%),
+    linear-gradient(rgba(180,100,20,.18), rgba(100,50,10,.22)),
+    url('wood.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* ── Wrap ── */
+.auth-wrap {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ── Brand ── */
+.auth-brand { text-align: center; }
+
+.auth-logo {
+  display: block;
+  font-size: 3rem;
+  margin-bottom: 6px;
+  filter: drop-shadow(0 0 16px rgba(240,180,10,.6));
+  animation: logoPulse 2.8s ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+  0%, 100% { filter: drop-shadow(0 0 10px rgba(240,180,10,.4)); }
+  50%       { filter: drop-shadow(0 0 24px rgba(240,180,10,.8)); }
+}
+
+.auth-title {
+  font-family: 'Nunito', sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #f0c060;
+  text-shadow: 0 2px 8px rgba(0,0,0,.5);
+  letter-spacing: -.02em;
+}
+
+.auth-sub {
+  font-size: .88rem;
+  color: rgba(255,235,180,.8);
+  margin-top: 6px;
+  text-shadow: 0 1px 4px rgba(0,0,0,.4);
+}
+
+/* ── Card ── */
+.auth-card {
+  width: 100%;
+  background: rgba(245,225,175,.95);
+  border: 2px solid rgba(210,165,70,.55);
+  border-radius: 24px;
+  padding: 30px 32px 28px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.28), 0 1px 0 rgba(255,245,200,.6) inset;
+  animation: slideUp .45s cubic-bezier(.22,.68,0,1.2);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(24px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ── Tabs ── */
+.auth-tabs {
+  display: flex;
+  background: rgba(200,155,60,.25);
+  border-radius: 14px;
+  padding: 4px;
+  margin-bottom: 22px;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 9px;
+  border: none;
+  background: transparent;
+  border-radius: 11px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .9rem;
+  font-weight: 800;
+  color: rgba(80,45,10,.65);
+  cursor: pointer;
+  transition: background .2s, color .2s, box-shadow .2s;
+}
+
+.auth-tab.active {
+  background: rgba(200,140,30,.85);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.18);
+}
+
+/* ── Error banner ── */
+.auth-error {
+  background: rgba(180,40,40,.12);
+  border: 1.5px solid rgba(180,40,40,.40);
+  color: #8b1a1a;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: .85rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+/* ── Form fields ── */
+.auth-form { display: flex; flex-direction: column; gap: 14px; }
+
+.field-group { display: flex; flex-direction: column; gap: 5px; }
+
+.field-label {
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: rgba(80,45,10,.8);
+}
+
+.field-input {
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 2px solid rgba(180,130,50,.35);
+  background: rgba(255,248,220,.85);
+  font-family: 'Inter', sans-serif;
+  font-size: .95rem;
+  color: #2a1400;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.field-input::placeholder { color: rgba(130,90,40,.45); }
+
+.field-input:focus {
+  border-color: rgba(180,110,10,.7);
+  box-shadow: 0 0 0 3px rgba(200,150,30,.18);
+}
+
+/* ── Submit button ── */
+.auth-submit {
+  margin-top: 6px;
+  padding: 13px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #c47d1a, #9a5c0e);
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  font-weight: 900;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 16px rgba(160,90,10,.35);
+  transition: filter .18s, transform .18s;
+}
+
+.auth-submit:hover  { filter: brightness(1.1); transform: translateY(-1px); }
+.auth-submit:active { filter: brightness(.92); transform: translateY(1px);  }
+
+.btn-spinner {
+  display: inline-block;
+  animation: spin .7s linear infinite;
+  font-size: 1.1rem;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Divider ── */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: rgba(100,65,20,.55);
+  font-size: .82rem;
+  font-weight: 600;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1.5px;
+  background: rgba(180,130,50,.3);
+}
+
+/* ── Google button ── */
+.btn-google {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border: 2px solid rgba(180,130,50,.35);
+  border-radius: 14px;
+  background: rgba(255,252,240,.92);
+  font-family: 'Nunito', sans-serif;
+  font-size: .95rem;
+  font-weight: 800;
+  color: #2a1400;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,.1);
+  transition: background .18s, box-shadow .18s, transform .18s;
+}
+
+.btn-google:hover {
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,.16);
+  transform: translateY(-1px);
+}
+
+.btn-google:active { transform: translateY(1px); }
+
+.google-icon { width: 22px; height: 22px; flex-shrink: 0; }
+
+/* ── Footer ── */
+.auth-footer {
+  font-size: .78rem;
+  color: rgba(255,235,180,.7);
+  text-shadow: 0 1px 3px rgba(0,0,0,.4);
+  text-align: center;
+}
+
+.auth-footer a { color: rgba(255,220,120,.9); text-decoration: underline; }
+
+/* Utility */
+.hidden { display: none !important; }
