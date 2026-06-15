@@ -678,20 +678,6 @@
   gap: 12px;
 }
 
-@media (max-width: 600px) {
-  .lobby-settings-container {
-    grid-template-columns: 1fr;
-  }
-  .lobby-setting-box {
-    grid-column: span 1 !important;
-  }
-  .topbar-title {
-    display: none !important;
-  }
-  .topbar-user {
-    display: none !important;
-  }
-}
 
 .countdown-card {
   text-align: center;
@@ -909,4 +895,84 @@
   color: #c0c0c0;
   line-height: 1.5;
   max-width: 180px;
+}
+
+/* ── Merged Mobile Query (max-width: 600px) ── */
+@media (max-width: 600px) {
+  .lobby-settings-container {
+    grid-template-columns: 1fr;
+  }
+  .lobby-setting-box {
+    grid-column: span 1 !important;
+  }
+  .topbar-title {
+    display: none !important;
+  }
+  .topbar-user {
+    display: none !important;
+  }
+
+  /* Scoreboard & Word List horizontal stacked grid */
+  .multi-sidebar {
+    display: grid !important;
+    grid-template-areas: 
+      "sb-header"
+      "sb-list"
+      "w-list";
+    grid-template-columns: 1fr;
+    height: auto !important;
+    gap: 6px !important;
+    overflow: visible !important;
+  }
+
+  .multi-sidebar .sidebar-header {
+    grid-area: sb-header;
+    flex-direction: row !important;
+    width: 100% !important;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .scoreboard-list {
+    grid-area: sb-list;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    width: 100% !important;
+    height: 38px !important;
+    gap: 6px !important;
+    padding-bottom: 2px !important;
+    max-height: none !important;
+  }
+
+  .scoreboard-item {
+    padding: 4px 8px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    height: 28px !important;
+    font-size: 0.75rem !important;
+  }
+
+  .multi-sidebar .word-list {
+    grid-area: w-list;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    width: 100% !important;
+    gap: 6px !important;
+    align-items: center !important;
+    padding-bottom: 2px !important;
+  }
+
+  /* Compact Board height adjustment */
+  .multi-game-container .board {
+    --board-sz: min(
+      calc(100vw - 16px),
+      calc(100vh - var(--topbar-h) - 120px)
+    ) !important;
+  }
 }

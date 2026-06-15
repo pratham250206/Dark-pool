@@ -16,25 +16,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
-  <style>
-    /* Additional styles for exit button and layouts in game.html */
-    .btn-exit {
-      padding: 6px 14px;
-      border: 1.5px solid rgba(255,255,255,.25);
-      border-radius: 10px;
-      background: rgba(255,245,210,.1);
-      color: rgba(255,225,140,.85);
-      font-family: 'Inter', sans-serif;
-      font-size: .78rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background .2s, border-color .2s;
-    }
-    .btn-exit:hover {
-      background: rgba(255,245,210,.25);
-      border-color: rgba(255,245,210,.5);
-    }
-  </style>
 </head>
 <body>
 
@@ -107,7 +88,7 @@
     <!-- Top bar -->
     <header class="topbar">
       <div class="topbar-brand">
-        <button class="btn-exit" id="exitToMenuBtn">← Main Menu</button>
+        <button class="btn-exit" id="exitToMenuBtn">← <span class="btn-text">Main Menu</span></button>
         <span class="topbar-title" id="gameModeLabel">Dark Pool Cipher</span>
       </div>
       
