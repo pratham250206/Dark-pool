@@ -1250,3 +1250,51 @@ body {
   border-color: #cd7f32;
   color: #fff;
 }
+
+/* ── Leaderboard Tabs ── */
+.leaderboard-tabs {
+  display: flex;
+  background: rgba(180, 120, 40, 0.15);
+  border: 1.5px solid rgba(180, 120, 40, 0.25);
+  border-radius: 14px;
+  padding: 4px;
+  margin-bottom: 16px;
+}
+
+.leaderboard-tab {
+  flex: 1;
+  padding: 9px;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .9rem;
+  font-weight: 800;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: background .2s, color .2s, box-shadow .2s;
+}
+
+.leaderboard-tab:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.leaderboard-tab.active {
+  background: var(--accent);
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,.18);
+}
+
+[data-theme="charcoal"] .leaderboard-tabs {
+  background: rgba(30, 30, 32, 0.5);
+  border-color: rgba(120, 120, 130, 0.25);
+}
+[data-theme="neon"] .leaderboard-tabs {
+  background: rgba(10, 32, 18, 0.5);
+  border-color: rgba(0, 255, 100, 0.25);
+}
+[data-theme="mint"] .leaderboard-tabs {
+  background: rgba(200, 225, 205, 0.3);
+  border-color: rgba(80, 110, 85, 0.25);
+}
