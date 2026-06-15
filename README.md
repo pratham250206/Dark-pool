@@ -1,6 +1,20 @@
 # ⬡ Dark Pool Cipher
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Vercel-success?style=for-the-badge&logo=vercel&color=0070f3)](https://dark-pool-psi.vercel.app/)
+
 **Dark Pool Cipher** is a premium, high-fidelity, wood-inlay themed Word Search puzzle game. Solve trading-themed cipher ciphers in solo modes or challenge friends in real-time, chaotic multiplayer battle rooms with dynamic sound effects, live floating emoji reactions, and tactical cipher sabotages.
+
+🔗 **Play the Live App here**: [https://dark-pool-psi.vercel.app/](https://dark-pool-psi.vercel.app/)
+
+---
+
+## 🎨 Visual Themes & Aesthetics
+
+The interface is built with premium aesthetics (glassmorphic overlays, harmonic gradients, micro-animations, and custom shadows) and supports **4 Curated Visual Themes** selected in the settings menu:
+*   🍯 **Honey Amber (Default)**: Warm wood-plank aesthetics, golden headers, and classic retro typography.
+*   🖤 **Charcoal Dark**: Deep, sleek slate surfaces combined with rich champagne-gold accents.
+*   ⚡ **Neon Matrix**: Pitch-black grids highlighted by neon green borders, glowing text, and matrix-hacker accents.
+*   🌿 **Forest Mint**: Sage-green/moss-oak plates with classic emerald highlights.
 
 ---
 
@@ -19,7 +33,7 @@
 
 ### ⚔️ 3. Battle Room (Multiplayer)
 *   Create a private lobby or join one using a 6-character room code.
-*   **Lobby Settings (Host only)**: Toggle game modes (Classic/Hidden) and set custom match timers.
+*   **Lobby Settings (Host only)**: Toggle game modes (Classic/Hidden), set custom match timers, and toggle Chat, Emojis, or Sabotages independently.
 *   **3-Second Countdown**: Match starts with a synchronized visual `3 ➔ 2 ➔ 1 ➔ GO!` overlay.
 *   **Ticking Timer**: Header chip counts down critical remaining match time.
 *   **Real-time Standings**: Live scoreboard showing opponent word counts in real time.
@@ -28,14 +42,36 @@
 
 ---
 
-## ⚡ Interactive Additions
+## 🏆 Global Leaderboards & Live Timer
 
-*   **🎹 Web Audio Synth**: Synthesizes mechanical ticking, chimes, selection slides, alarm warnings, and recovery cues dynamically inside the browser—no heavy MP3 downloads required. Includes a header **Mute** button that persists preferences.
+*   **Live Gameplay Timer**: Ticks up in `MM:SS` format on the topbar during solo games. On victory, the final time is recorded (e.g. `1m 24s`).
+*   **Multi-Tab Leaderboard Modal**: View rankings for **Classic** and **Hidden** modes. Ranks 1, 2, and 3 are highlighted with Gold, Silver, and Bronze badges.
+*   **Firebase Realtime Database Sync**: Automatically submits completion scores (Player Name, Completion Time, Timestamp) to the cloud when connected.
+*   **Offline Fallback**: Saves and queries personal best times locally (`dp_local_leaderboard` in localStorage) if playing offline.
+
+---
+
+## ⚡ Interactive Additions & Settings
+
+*   **⚙️ General Settings Modal**: Customize visual theme, audio waveform synth tones (Sine, Triangle, Sawtooth, Square), and sound FX volume toggling.
+*   **💬 Decoupled Chat & Emojis**: Room settings allow Chat and Emojis to function independently:
+    *   *Chat Off / Emojis On*: Chat inputs collapse to display "Chat disabled by host", but the quick emoji bar remains active for floating emojis.
+    *   *Chat On / Emojis Off*: Chat messages can be typed normally, but the quick emoji bar is hidden.
+*   **🎹 Web Audio Synth**: Synthesizes mechanical ticking, chimes, selection slides, alarm warnings, and recovery cues dynamically inside the browser—no heavy MP3 downloads required.
 *   **🎈 Floating Live Emojis**: Synced emoji bubbles that float up across the boards of all players in the room when clicked.
 *   **⚠️ Cipher Sabotages**: Deciphering a correct word triggers a random sabotage block targeting opponents:
     *   *Grid Shake*: Violently shakes the opponent's game board.
     *   *Ink Shroud*: Blurs the opponent's letters, making coordinates hard to read.
     *   *Lockout Hack*: Hides the opponent's target list behind a hacking lock warning.
+
+---
+
+## 📱 Mobile Responsiveness
+
+The interface is optimized for phone viewports:
+*   **Compact Topbars**: Settings, Leaderboard, and Sign Out text buttons collapse into neat icon-only buttons on phone viewports to clear horizontal space.
+*   **Responsive Sidebars**: Sidebar widgets use CSS Grid on mobile, organizing target words as horizontal scrollable pills instead of massive boxes, preventing layout congestion.
+*   **Expanded Grid Board**: Game grids scale up to be larger on mobile due to the optimized height of the headers.
 
 ---
 
@@ -48,7 +84,7 @@ Since the project consists of pure static files, you can run it using any simple
 
 Open `http://localhost:8080` in your web browser.
 
-### 🔌 Firebase Integration (For Online Multiplayer)
+### 🔌 Firebase Integration (For Online Multiplayer & Leaderboards)
 To connect your own database instead of using the local bot fallback:
 1.  Go to the [Firebase Console](https://console.firebase.google.com/).
 2.  Create a new project named `dark-pool-cipher`.
@@ -72,3 +108,8 @@ To connect your own database instead of using the local bot fallback:
 2. Navigate to **Pages** in the left sidebar.
 3. Select **Deploy from a branch** under Source.
 4. Choose `main` as the source branch and click **Save**.
+
+---
+
+## 👤 Author
+*   Created by **Yash Shrivastava**
