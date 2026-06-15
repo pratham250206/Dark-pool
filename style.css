@@ -805,6 +805,16 @@ body {
   .overlay-card { padding: 26px 22px; }
   .topbar-title { display: none; }
   .stat-chip { min-width: 56px; padding: 4px 10px; }
+  .cell { font-size: 0.95rem !important; }
+  .creator-badge {
+    padding: 6px 12px;
+    font-size: 0.72rem;
+    gap: 8px;
+  }
+  .creator-logo {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -996,4 +1006,48 @@ body {
   object-fit: cover;
   border: 1.5px solid var(--accent);
   box-shadow: 0 0 8px rgba(0,0,0,0.15);
+}
+
+/* ── Lobby Select (shared style for dropdowns) ── */
+.lobby-select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 2px solid rgba(180, 130, 50, 0.4);
+  background: #fff;
+  color: #2a1200;
+  font-weight: 700;
+  font-size: .85rem;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+}
+.lobby-select:focus {
+  border-color: #c47d1a;
+}
+
+[data-theme="charcoal"] .lobby-select {
+  background: rgba(55, 55, 60, 0.95);
+  border-color: rgba(120, 120, 130, 0.4);
+  color: #e2e2e5;
+}
+[data-theme="charcoal"] .lobby-select:focus {
+  border-color: #dfac42;
+}
+
+[data-theme="neon"] .lobby-select {
+  background: rgba(8, 26, 14, 0.95);
+  border-color: rgba(0, 255, 100, 0.35);
+  color: #d5fadc;
+}
+[data-theme="neon"] .lobby-select:focus {
+  border-color: #00ff66;
+}
+
+[data-theme="mint"] .lobby-select {
+  background: rgba(240, 248, 242, 0.95);
+  border-color: rgba(80, 110, 85, 0.4);
+  color: #2b3a2d;
+}
+[data-theme="mint"] .lobby-select:focus {
+  border-color: #2e7d32;
 }

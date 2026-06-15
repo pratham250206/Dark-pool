@@ -303,6 +303,16 @@ html, body.menu-body {
 .hidden { display: none !important; }
 
 /* ── Responsive Mobile ── */
+@media (max-width: 600px) {
+  .menu-user .btn-text {
+    display: none !important;
+  }
+  .btn-settings, .btn-signout {
+    padding: 6px 10px !important;
+    font-size: 0.95rem !important;
+  }
+}
+
 @media (max-width: 480px) {
   .menu-topbar {
     padding: 0 16px;
@@ -328,7 +338,7 @@ html, body.menu-body {
   }
   
   .user-name {
-    font-size: 0.8rem;
+    display: none !important;
   }
   
   .btn-signout {

@@ -682,6 +682,15 @@
   .lobby-settings-container {
     grid-template-columns: 1fr;
   }
+  .lobby-setting-box {
+    grid-column: span 1 !important;
+  }
+  .topbar-title {
+    display: none !important;
+  }
+  .topbar-user {
+    display: none !important;
+  }
 }
 
 .countdown-card {
