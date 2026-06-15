@@ -1024,22 +1024,52 @@ async function startMultiplay() {
     buildLocalGrid();
   }
 
-  // Toggle in-game Chat visibility
+  // Toggle in-game Chat / Emoji panels visibility
   const chatSidebar = document.querySelector('.chat-sidebar');
+  const chatMessagesContainer = $('chatMessages');
   if (chatSidebar) {
-    if (roomSettings.chatEnabled) {
+    if (roomSettings.chatEnabled || roomSettings.emojisEnabled) {
       chatSidebar.classList.remove('hidden');
-    } else {
-      chatSidebar.classList.add('hidden');
-    }
-  }
+      
+      // If chat is enabled, show chat messages and form. If disabled, hide them.
+      if (roomSettings.chatEnabled) {
+        if (chatMessagesContainer) chatMessagesContainer.style.display = '';
+        if (chatForm) chatForm.style.display = '';
+        const placeholderMsg = $('chatDisabledMsg');
+        if (placeholderMsg) placeholderMsg.remove();
+      } else {
+        if (chatMessagesContainer) chatMessagesContainer.style.display = 'none';
+        if (chatForm) chatForm.style.display = 'none';
+        
+        // Show indicator that chat is disabled
+        let placeholderMsg = $('chatDisabledMsg');
+        if (!placeholderMsg) {
+          placeholderMsg = document.createElement('div');
+          placeholderMsg.id = 'chatDisabledMsg';
+          placeholderMsg.style.padding = '20px 10px';
+          placeholderMsg.style.textAlign = 'center';
+          placeholderMsg.style.fontSize = '0.82rem';
+          placeholderMsg.style.fontWeight = '800';
+          placeholderMsg.style.color = 'var(--text-dim)';
+          placeholderMsg.style.background = 'var(--surface-soft)';
+          placeholderMsg.style.borderRadius = '10px';
+          placeholderMsg.style.margin = '10px';
+          placeholderMsg.textContent = '💬 Chat disabled by host';
+          chatForm.parentNode.insertBefore(placeholderMsg, chatForm);
+        }
+      }
 
-  // Toggle quick emojis bar visibility
-  if (emojiBar) {
-    if (roomSettings.emojisEnabled) {
-      emojiBar.classList.remove('hidden');
+      // Show or hide emoji quick selection bar
+      if (emojiBar) {
+        if (roomSettings.emojisEnabled) {
+          emojiBar.style.display = '';
+        } else {
+          emojiBar.style.display = 'none';
+        }
+      }
     } else {
-      emojiBar.classList.add('hidden');
+      // Both disabled -> hide sidebar completely
+      chatSidebar.classList.add('hidden');
     }
   }
   
@@ -1326,7 +1356,9 @@ emojiBar.addEventListener('click', e => {
   if (!roomSettings.emojisEnabled) return;
   const btn = e.target.closest('.emoji-btn');
   if (!btn) return;
-  sendChatMessage(btn.dataset.emoji);
+  if (roomSettings.chatEnabled) {
+    sendChatMessage(btn.dataset.emoji);
+  }
   sendEmojiEffect(btn.dataset.emoji);
 });
 
