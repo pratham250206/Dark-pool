@@ -3,6 +3,14 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script>
+    (function() {
+      const theme = localStorage.getItem('dp_theme') || 'amber';
+      if (theme !== 'amber') {
+        document.documentElement.setAttribute('data-theme', theme);
+      }
+    })();
+  </script>
   <title>Dark Pool Cipher — Multiplayer Lobby</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -122,6 +130,39 @@
           </select>
           <div class="lobby-setting-status hidden" id="guestTimerStatus">
             Timer: <strong id="guestTimerVal">No Limit</strong>
+          </div>
+        </div>
+
+        <div class="lobby-setting-box">
+          <label for="lobbyChatToggle">In-game Chat:</label>
+          <select id="lobbyChatToggle" class="lobby-select">
+            <option value="true">💬 Chat Enabled</option>
+            <option value="false">🚫 Chat Disabled</option>
+          </select>
+          <div class="lobby-setting-status hidden" id="guestChatStatus">
+            Chat: <strong id="guestChatVal">Enabled</strong>
+          </div>
+        </div>
+
+        <div class="lobby-setting-box">
+          <label for="lobbyEmojisToggle">Quick Emojis:</label>
+          <select id="lobbyEmojisToggle" class="lobby-select">
+            <option value="true">🔥 Emojis Enabled</option>
+            <option value="false">🚫 Emojis Disabled</option>
+          </select>
+          <div class="lobby-setting-status hidden" id="guestEmojisStatus">
+            Emojis: <strong id="guestEmojisVal">Enabled</strong>
+          </div>
+        </div>
+
+        <div class="lobby-setting-box" style="grid-column: span 2;">
+          <label for="lobbySabotagesToggle">Sabotage Attacks:</label>
+          <select id="lobbySabotagesToggle" class="lobby-select">
+            <option value="true">⚡ Sabotage Enabled</option>
+            <option value="false">🚫 Sabotage Disabled</option>
+          </select>
+          <div class="lobby-setting-status hidden" id="guestSabotagesStatus">
+            Sabotage: <strong id="guestSabotagesVal">Enabled</strong>
           </div>
         </div>
       </div>

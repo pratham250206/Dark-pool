@@ -105,6 +105,27 @@ html, body.menu-body {
 
 .btn-signout:hover { background: rgba(255,245,210,.2); }
 
+.btn-settings {
+  padding: 6px 14px;
+  border: 1.5px solid rgba(200, 150, 60, 0.5);
+  border-radius: 10px;
+  background: rgba(200, 140, 30, 0.2);
+  color: #f0c060;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-settings:hover {
+  background: rgba(200, 140, 30, 0.35);
+}
+
+.btn-settings:active {
+  transform: scale(0.96);
+}
+
 /* ── Main ── */
 .menu-main {
   flex: 1;

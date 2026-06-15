@@ -72,6 +72,15 @@ const guestGameModeVal   = $('guestGameModeVal');
 const lobbyTimerLimit    = $('lobbyTimerLimit');
 const guestTimerStatus   = $('guestTimerStatus');
 const guestTimerVal      = $('guestTimerVal');
+const lobbyChatToggle    = $('lobbyChatToggle');
+const guestChatStatus    = $('guestChatStatus');
+const guestChatVal       = $('guestChatVal');
+const lobbyEmojisToggle  = $('lobbyEmojisToggle');
+const guestEmojisStatus  = $('guestEmojisStatus');
+const guestEmojisVal     = $('guestEmojisVal');
+const lobbySabotagesToggle = $('lobbySabotagesToggle');
+const guestSabotagesStatus = $('guestSabotagesStatus');
+const guestSabotagesVal   = $('guestSabotagesVal');
 const countdownOverlay   = $('countdownOverlay');
 const countdownNumber    = $('countdownNumber');
 const multiStats         = $('multiStats');
@@ -95,6 +104,11 @@ let shuffleTimer = null;
 let botTimers = [];
 let roomGameMode = 'classic'; // 'classic' | 'hidden'
 let roomTimerLimit = 0; // 0 = no limit
+let roomSettings = {
+  chatEnabled: true,
+  emojisEnabled: true,
+  sabotagesEnabled: true
+};
 let gameTimerInterval = null;
 let countdownTimer = null;
 let gameStartTime = 0;
@@ -137,7 +151,11 @@ function playSynthTone(frequency, type, duration, volume = 0.1, stopDelay = 0.05
   try {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
-    osc.type = type;
+    
+    // Customize tone oscillator type based on saved waveform setting
+    const savedSynth = localStorage.getItem('dp_synth_type') || 'sine';
+    osc.type = (type === 'sine') ? savedSynth : type;
+    
     osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
     gain.gain.setValueAtTime(volume, audioCtx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
@@ -231,6 +249,7 @@ function triggerEmojiEffectLocally(emoji) {
 
 // ── Sabotage Manager ────────────────────────────────
 function triggerOpponentSabotage() {
+  if (!roomSettings.sabotagesEnabled) return;
   const sabotages = ['shake', 'shroud', 'hacked'];
   const chosenType = sabotages[randInt(sabotages.length)];
   
@@ -425,6 +444,81 @@ if (lobbyTimerLimit) {
   });
 }
 
+// ── Lobby Chat Toggle Settings Change ──
+if (lobbyChatToggle) {
+  lobbyChatToggle.addEventListener('change', async () => {
+    if (!isHost) return;
+    const val = lobbyChatToggle.value === 'true';
+    roomSettings.chatEnabled = val;
+    if (FIREBASE_READY && roomRef) {
+      try {
+        await roomRef.child('chatEnabled').set(val);
+        await roomRef.child('chat').push({
+          uid: 'system',
+          name: 'System',
+          text: `In-game chat ${val ? 'enabled' : 'disabled'} by host.`,
+          system: true,
+          ts: Date.now()
+        });
+      } catch (err) {
+        console.error("Firebase Update Chat Error:", err);
+      }
+    } else {
+      sendSystemMessage(`In-game chat ${val ? 'enabled' : 'disabled'} by host.`);
+    }
+  });
+}
+
+// ── Lobby Emojis Toggle Settings Change ──
+if (lobbyEmojisToggle) {
+  lobbyEmojisToggle.addEventListener('change', async () => {
+    if (!isHost) return;
+    const val = lobbyEmojisToggle.value === 'true';
+    roomSettings.emojisEnabled = val;
+    if (FIREBASE_READY && roomRef) {
+      try {
+        await roomRef.child('emojisEnabled').set(val);
+        await roomRef.child('chat').push({
+          uid: 'system',
+          name: 'System',
+          text: `Quick emojis ${val ? 'enabled' : 'disabled'} by host.`,
+          system: true,
+          ts: Date.now()
+        });
+      } catch (err) {
+        console.error("Firebase Update Emojis Error:", err);
+      }
+    } else {
+      sendSystemMessage(`Quick emojis ${val ? 'enabled' : 'disabled'} by host.`);
+    }
+  });
+}
+
+// ── Lobby Sabotages Toggle Settings Change ──
+if (lobbySabotagesToggle) {
+  lobbySabotagesToggle.addEventListener('change', async () => {
+    if (!isHost) return;
+    const val = lobbySabotagesToggle.value === 'true';
+    roomSettings.sabotagesEnabled = val;
+    if (FIREBASE_READY && roomRef) {
+      try {
+        await roomRef.child('sabotagesEnabled').set(val);
+        await roomRef.child('chat').push({
+          uid: 'system',
+          name: 'System',
+          text: `Sabotage attacks ${val ? 'enabled' : 'disabled'} by host.`,
+          system: true,
+          ts: Date.now()
+        });
+      } catch (err) {
+        console.error("Firebase Update Sabotages Error:", err);
+      }
+    } else {
+      sendSystemMessage(`Sabotage attacks ${val ? 'enabled' : 'disabled'} by host.`);
+    }
+  });
+}
+
 // ── Room Code Generator ─────────────────────────────
 function generateRoomCode() {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no ambiguous chars
@@ -463,6 +557,9 @@ createRoomBtn.addEventListener('click', async () => {
         hostUid: myUser.uid,
         gameMode: lobbyGameMode.value,
         timerLimit: parseInt(lobbyTimerLimit.value, 10) || 0,
+        chatEnabled: lobbyChatToggle.value === 'true',
+        emojisEnabled: lobbyEmojisToggle.value === 'true',
+        sabotagesEnabled: lobbySabotagesToggle.value === 'true',
         words: words,
         gridLetters: letters,
         players: {
@@ -585,6 +682,19 @@ async function leaveRoom() {
 }
 
 // ── Show Waiting Lobby UI ───────────────────────────
+function applyLobbySettingsUI() {
+  if (isHost) {
+    if (lobbyChatToggle) lobbyChatToggle.value = roomSettings.chatEnabled.toString();
+    if (lobbyEmojisToggle) lobbyEmojisToggle.value = roomSettings.emojisEnabled.toString();
+    if (lobbySabotagesToggle) lobbySabotagesToggle.value = roomSettings.sabotagesEnabled.toString();
+  } else {
+    if (guestChatVal) guestChatVal.textContent = roomSettings.chatEnabled ? 'Enabled' : 'Disabled';
+    if (guestEmojisVal) guestEmojisVal.textContent = roomSettings.emojisEnabled ? 'Enabled' : 'Disabled';
+    if (guestSabotagesVal) guestSabotagesVal.textContent = roomSettings.sabotagesEnabled ? 'Enabled' : 'Disabled';
+  }
+}
+
+// ── Show Waiting Lobby UI ───────────────────────────
 function showWaitingLobby() {
   joinOrCreateCard.classList.add('hidden');
   waitingLobbyCard.classList.remove('hidden');
@@ -599,6 +709,15 @@ function showWaitingLobby() {
     
     lobbyTimerLimit.classList.remove('hidden');
     guestTimerStatus.classList.add('hidden');
+
+    lobbyChatToggle.classList.remove('hidden');
+    guestChatStatus.classList.add('hidden');
+
+    lobbyEmojisToggle.classList.remove('hidden');
+    guestEmojisStatus.classList.add('hidden');
+
+    lobbySabotagesToggle.classList.remove('hidden');
+    guestSabotagesStatus.classList.add('hidden');
   } else {
     startGameBtn.classList.add('hidden');
     $('hostOnlyNote').classList.remove('hidden');
@@ -610,6 +729,18 @@ function showWaitingLobby() {
     lobbyTimerLimit.classList.add('hidden');
     guestTimerStatus.classList.remove('hidden');
     guestTimerVal.textContent = roomTimerLimit === 0 ? 'No Limit' : `${roomTimerLimit} Seconds`;
+
+    lobbyChatToggle.classList.add('hidden');
+    guestChatStatus.classList.remove('hidden');
+    guestChatVal.textContent = roomSettings.chatEnabled ? 'Enabled' : 'Disabled';
+
+    lobbyEmojisToggle.classList.add('hidden');
+    guestEmojisStatus.classList.remove('hidden');
+    guestEmojisVal.textContent = roomSettings.emojisEnabled ? 'Enabled' : 'Disabled';
+
+    lobbySabotagesToggle.classList.add('hidden');
+    guestSabotagesStatus.classList.remove('hidden');
+    guestSabotagesVal.textContent = roomSettings.sabotagesEnabled ? 'Enabled' : 'Disabled';
   }
 }
 
@@ -715,6 +846,27 @@ function setupFirebaseListeners() {
     } else {
       guestTimerVal.textContent = limit === 0 ? 'No Limit' : `${limit} Seconds`;
     }
+  });
+
+  // Listen for chat setting
+  roomRef.child('chatEnabled').on('value', snap => {
+    const enabled = snap.val() !== false;
+    roomSettings.chatEnabled = enabled;
+    applyLobbySettingsUI();
+  });
+  
+  // Listen for emojis setting
+  roomRef.child('emojisEnabled').on('value', snap => {
+    const enabled = snap.val() !== false;
+    roomSettings.emojisEnabled = enabled;
+    applyLobbySettingsUI();
+  });
+
+  // Listen for sabotages setting
+  roomRef.child('sabotagesEnabled').on('value', snap => {
+    const enabled = snap.val() !== false;
+    roomSettings.sabotagesEnabled = enabled;
+    applyLobbySettingsUI();
   });
   
   showWaitingLobby();
@@ -857,13 +1009,38 @@ async function startMultiplay() {
     targetWords = data.words;
     roomGameMode = data.gameMode || 'classic';
     roomTimerLimit = data.timerLimit || 0;
+    roomSettings.chatEnabled = data.chatEnabled !== false;
+    roomSettings.emojisEnabled = data.emojisEnabled !== false;
+    roomSettings.sabotagesEnabled = data.sabotagesEnabled !== false;
     startTimestamp = data.gameStart || Date.now();
     buildBoardFromGrid(data.gridLetters);
   } else {
     // Mock Mode Setup
     roomTimerLimit = parseInt(lobbyTimerLimit.value, 10) || 0;
+    roomSettings.chatEnabled = lobbyChatToggle.value === 'true';
+    roomSettings.emojisEnabled = lobbyEmojisToggle.value === 'true';
+    roomSettings.sabotagesEnabled = lobbySabotagesToggle.value === 'true';
     startTimestamp = Date.now();
     buildLocalGrid();
+  }
+
+  // Toggle in-game Chat visibility
+  const chatSidebar = document.querySelector('.chat-sidebar');
+  if (chatSidebar) {
+    if (roomSettings.chatEnabled) {
+      chatSidebar.classList.remove('hidden');
+    } else {
+      chatSidebar.classList.add('hidden');
+    }
+  }
+
+  // Toggle quick emojis bar visibility
+  if (emojiBar) {
+    if (roomSettings.emojisEnabled) {
+      emojiBar.classList.remove('hidden');
+    } else {
+      emojiBar.classList.add('hidden');
+    }
   }
   
   // Setup ticking timer
@@ -1136,6 +1313,7 @@ function triggerMultiGameOver(winnerName) {
 // ── In-room Chat logic ──────────────────────────────
 chatForm.addEventListener('submit', e => {
   e.preventDefault();
+  if (!roomSettings.chatEnabled) return;
   const text = chatInput.value.trim();
   if (!text) return;
   
@@ -1145,6 +1323,7 @@ chatForm.addEventListener('submit', e => {
 
 // Quick emojis
 emojiBar.addEventListener('click', e => {
+  if (!roomSettings.emojisEnabled) return;
   const btn = e.target.closest('.emoji-btn');
   if (!btn) return;
   sendChatMessage(btn.dataset.emoji);
@@ -1152,6 +1331,7 @@ emojiBar.addEventListener('click', e => {
 });
 
 async function sendEmojiEffect(emoji) {
+  if (!roomSettings.emojisEnabled) return;
   if (FIREBASE_READY && roomRef) {
     try {
       await roomRef.child('effects').push({
@@ -1224,18 +1404,20 @@ function startBotSimulations() {
         updateScoreboard();
         
         // Bot announces they found one
-        const botName = bot.name.split(' ')[0];
-        const emotes = ["🔥", "Aha!", "Found one! 🎉", "Yes!", "Got another one!"];
-        appendChatMessage(bot.name, emotes[randInt(emotes.length)], false);
+        if (roomSettings.chatEnabled) {
+          const botName = bot.name.split(' ')[0];
+          const emotes = ["🔥", "Aha!", "Found one! 🎉", "Yes!", "Got another one!"];
+          appendChatMessage(bot.name, emotes[randInt(emotes.length)], false);
+        }
         
         // Trigger floating emoji from bot
-        if (Math.random() < 0.6) {
+        if (roomSettings.emojisEnabled && Math.random() < 0.6) {
           const emojis = ["🔥", "😂", "👍", "🎉", "😮", "💀", "🏆"];
           triggerEmojiEffectLocally(emojis[randInt(emojis.length)]);
         }
         
         // Bot sabotages the user!
-        if (Math.random() < 0.7) {
+        if (roomSettings.sabotagesEnabled && Math.random() < 0.7) {
           const sabotages = ['shake', 'shroud', 'hacked'];
           const chosenType = sabotages[randInt(sabotages.length)];
           applySabotageLocally(chosenType, bot.name);
@@ -1251,6 +1433,7 @@ function startBotSimulations() {
 }
 
 function scheduleBotChatResponse() {
+  if (!roomSettings.chatEnabled) return;
   const botMessages = [
     "This is tough! 😂",
     "Where are all these words hiding? 🕵️",

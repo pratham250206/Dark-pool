@@ -3,6 +3,14 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script>
+    (function() {
+      const theme = localStorage.getItem('dp_theme') || 'amber';
+      if (theme !== 'amber') {
+        document.documentElement.setAttribute('data-theme', theme);
+      }
+    })();
+  </script>
   <title>Dark Pool Cipher — Choose Mode</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -23,6 +31,7 @@
     <div class="menu-user" id="menuUser">
       <div class="user-avatar" id="userAvatar">?</div>
       <span class="user-name" id="userName">Player</span>
+      <button class="btn-settings" id="menuSettingsBtn" title="General Settings" style="margin-right: 4px;">⚙️ Settings</button>
       <button class="btn-signout" id="signoutBtn" title="Sign out">⎋ Sign Out</button>
     </div>
   </header>
@@ -89,6 +98,51 @@
 
     </div><!-- /mode-grid -->
   </main>
+
+  <!-- General Settings Overlay Modal -->
+  <div class="overlay hidden" id="settingsOverlay">
+    <div class="overlay-card settings-card" style="max-width: 440px;">
+      <h2 class="win-title" style="font-size: 1.8rem; font-weight: 900; color: var(--accent); margin-bottom: 6px;">⚙️ General Settings</h2>
+      <p class="win-sub" style="color: var(--text-dim); font-size: .9rem; margin-bottom: 24px;">Customize your game experience</p>
+
+      <div class="settings-grid">
+        <!-- Theme Selection -->
+        <div class="settings-row">
+          <span class="setting-label">Visual Theme</span>
+          <select id="settingTheme" class="lobby-select">
+            <option value="amber">🍯 Honey Amber</option>
+            <option value="charcoal">🖤 Charcoal Dark</option>
+            <option value="neon">⚡ Neon Matrix</option>
+            <option value="mint">🌿 Forest Mint</option>
+          </select>
+        </div>
+
+        <!-- Synthesizer Tone Selection -->
+        <div class="settings-row">
+          <span class="setting-label">Synth Sound Wave</span>
+          <select id="settingSynthType" class="lobby-select">
+            <option value="sine">🔊 Sine Wave (Classic)</option>
+            <option value="triangle">🔉 Triangle Wave (Retro)</option>
+            <option value="sawtooth">📯 Sawtooth (Arcade)</option>
+            <option value="square">🎛️ Square Wave (Chiptune)</option>
+          </select>
+        </div>
+
+        <!-- Sound Toggle -->
+        <div class="settings-row">
+          <span class="setting-label">Sound FX</span>
+          <select id="settingSoundToggle" class="lobby-select">
+            <option value="enabled">🔊 Enabled</option>
+            <option value="muted">🔇 Muted</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="overlay-actions" style="margin-top: 24px;">
+        <button class="btn btn-primary btn-full" id="closeSettingsBtn">Save & Close</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>

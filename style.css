@@ -42,6 +42,8 @@
   --gap:           16px;
   --radius-cell:   10px;
   --radius-card:   20px;
+  --cell-bg:       rgba(248, 225, 170, 0.90);
+  --cell-border:   rgba(190, 145, 65, 0.40);
 }
 
 /* ── Reset ─────────────────────────────────── */
@@ -500,10 +502,10 @@ body {
   font-family: 'Nunito', sans-serif;
   font-weight: 900;
   font-size: clamp(.5rem, 1.4vmin, .95rem);
-  color: #2a1800;
+  color: var(--text);
   /* individual tiles: slightly lighter than the board — like inlaid wood tiles */
-  background: rgba(248, 225, 170, 0.90);
-  border: 2px solid rgba(190, 145, 65, 0.40);
+  background: var(--cell-bg);
+  border: 2px solid var(--cell-border);
   border-radius: var(--radius-cell);
   cursor: pointer;
   transition: background .12s, border-color .12s, color .12s, transform .12s, box-shadow .12s;
@@ -803,4 +805,142 @@ body {
   .overlay-card { padding: 26px 22px; }
   .topbar-title { display: none; }
   .stat-chip { min-width: 56px; padding: 4px 10px; }
+}
+
+/* ═══════════════════════════════════════════════
+   VISUAL THEMES
+   ═══════════════════════════════════════════════ */
+
+/* Charcoal Dark Theme */
+[data-theme="charcoal"] {
+  --accent:        #dfac42;   /* champagne gold */
+  --accent-light:  #fada8c;
+  --accent-dark:   #ad8228;
+  --text:          #e2e2e5;
+  --text-mid:      #b4b4b8;
+  --text-dim:      #828286;
+
+  /* charcoal surfaces */
+  --wood-light:    rgba(55, 55, 60, 0.85);
+  --wood-mid:      rgba(38, 38, 42, 0.85);
+  --wood-dark:     rgba(22, 22, 26, 0.90);
+  --wood-plank:    rgba(70, 70, 78, 0.75);
+  --wood-border:   rgba(100, 100, 110, 0.35);
+  --wood-border-l: rgba(140, 140, 150, 0.35);
+
+  --surface:       rgba(28, 28, 32, 0.96);
+  --surface-soft:  rgba(42, 42, 48, 0.92);
+  --border:        rgba(100, 100, 110, 0.25);
+  --border-strong: rgba(130, 130, 140, 0.35);
+
+  --cell-bg:       rgba(60, 60, 65, 0.90);
+  --cell-border:   rgba(120, 120, 130, 0.35);
+}
+
+[data-theme="charcoal"] body,
+[data-theme="charcoal"] .auth-bg,
+[data-theme="charcoal"] .menu-bg,
+[data-theme="charcoal"] .multi-bg {
+  background-image:
+    radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(10,10,12,.85) 100%),
+    linear-gradient(rgba(20,20,25,.75), rgba(15,15,18,.85)),
+    url('wood.png') !important;
+}
+
+/* Neon Matrix Theme */
+[data-theme="neon"] {
+  --accent:        #00ff66;   /* matrix neon green */
+  --accent-light:  #99ffbb;
+  --accent-dark:   #00b344;
+  --text:          #d5fadc;
+  --text-mid:      #88d99c;
+  --text-dim:      #50a667;
+
+  /* pitch black / toxic neon surfaces */
+  --wood-light:    rgba(8, 26, 14, 0.88);
+  --wood-mid:      rgba(4, 18, 9, 0.90);
+  --wood-dark:     rgba(1, 10, 3, 0.94);
+  --wood-plank:    rgba(16, 45, 22, 0.75);
+  --wood-border:   rgba(0, 255, 100, 0.25);
+  --wood-border-l: rgba(0, 255, 100, 0.35);
+
+  --surface:       rgba(5, 18, 10, 0.96);
+  --surface-soft:  rgba(10, 34, 18, 0.92);
+  --border:        rgba(0, 255, 100, 0.20);
+  --border-strong: rgba(0, 255, 100, 0.30);
+
+  --cell-bg:       rgba(12, 38, 20, 0.90);
+  --cell-border:   rgba(0, 255, 100, 0.35);
+}
+
+[data-theme="neon"] body,
+[data-theme="neon"] .auth-bg,
+[data-theme="neon"] .menu-bg,
+[data-theme="neon"] .multi-bg {
+  background-image:
+    radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,10,2,.95) 100%),
+    linear-gradient(rgba(4,20,7,.85), rgba(1,8,2,.94)),
+    url('wood.png') !important;
+}
+
+/* Forest Mint Theme */
+[data-theme="mint"] {
+  --accent:        #2e7d32;   /* classic forest green */
+  --accent-light:  #66bb6a;
+  --accent-dark:   #1b5e20;
+  --text:          #2b3a2d;
+  --text-mid:      #4d5c4f;
+  --text-dim:      #7a8c7c;
+
+  /* sage green / moss oak surfaces */
+  --wood-light:    rgba(215, 235, 220, 0.85);
+  --wood-mid:      rgba(190, 215, 195, 0.85);
+  --wood-dark:     rgba(130, 160, 135, 0.90);
+  --wood-plank:    rgba(200, 225, 205, 0.72);
+  --wood-border:   rgba(80, 110, 85, 0.35);
+  --wood-border-l: rgba(130, 170, 135, 0.35);
+
+  --surface:       rgba(240, 248, 242, 0.96);
+  --surface-soft:  rgba(222, 238, 225, 0.92);
+  --border:        rgba(80, 110, 85, 0.25);
+  --border-strong: rgba(60, 90, 65, 0.35);
+
+  --cell-bg:       rgba(220, 240, 225, 0.90);
+  --cell-border:   rgba(100, 130, 105, 0.35);
+}
+
+[data-theme="mint"] body,
+[data-theme="mint"] .auth-bg,
+[data-theme="mint"] .menu-bg,
+[data-theme="mint"] .multi-bg {
+  background-image:
+    radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(15,35,20,.60) 100%),
+    linear-gradient(rgba(100,160,110,.20), rgba(60,110,70,.25)),
+    url('wood.png') !important;
+}
+
+/* ── Settings Grid Styling ── */
+.settings-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+  margin: 20px 0;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap);
+  background: var(--surface-soft);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 16px;
+}
+
+.setting-label {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--text);
 }
