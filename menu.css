@@ -307,7 +307,7 @@ html, body.menu-body {
   .menu-user .btn-text {
     display: none !important;
   }
-  .btn-settings, .btn-signout {
+  .btn-leaderboard, .btn-settings, .btn-signout {
     padding: 6px 10px !important;
     font-size: 0.95rem !important;
   }

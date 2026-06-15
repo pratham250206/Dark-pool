@@ -133,3 +133,156 @@ if (menuSettingsBtn && settingsOverlay && closeSettingsBtn) {
     settingsOverlay.classList.add('hidden');
   });
 }
+
+// ── Leaderboards Overlay Handling ──
+const menuLeaderboardBtn = document.getElementById('menuLeaderboardBtn');
+const leaderboardOverlay = document.getElementById('leaderboardOverlay');
+const closeLeaderboardBtn = document.getElementById('closeLeaderboardBtn');
+const tabClassicLeaderboard = document.getElementById('tabClassicLeaderboard');
+const tabHiddenLeaderboard = document.getElementById('tabHiddenLeaderboard');
+const leaderboardEntries = document.getElementById('leaderboardEntries');
+const leaderboardLoading = document.getElementById('leaderboardLoading');
+const leaderboardNoEntries = document.getElementById('leaderboardNoEntries');
+
+let activeLeaderboardTab = 'classic'; // 'classic' or 'hidden'
+
+function formatSeconds(totalSeconds) {
+  const mins = Math.floor(totalSeconds / 60);
+  const secs = totalSeconds % 60;
+  return `${mins}m ${secs.toString().padStart(2, '0')}s`;
+}
+
+function loadLeaderboards(mode) {
+  activeLeaderboardTab = mode;
+  
+  // Update UI Tabs active state
+  if (mode === 'classic') {
+    tabClassicLeaderboard.classList.add('active');
+    tabClassicLeaderboard.setAttribute('aria-selected', 'true');
+    tabHiddenLeaderboard.classList.remove('active');
+    tabHiddenLeaderboard.setAttribute('aria-selected', 'false');
+  } else {
+    tabHiddenLeaderboard.classList.add('active');
+    tabHiddenLeaderboard.setAttribute('aria-selected', 'true');
+    tabClassicLeaderboard.classList.remove('active');
+    tabClassicLeaderboard.setAttribute('aria-selected', 'false');
+  }
+
+  leaderboardEntries.innerHTML = '';
+  leaderboardLoading.classList.remove('hidden');
+  leaderboardNoEntries.classList.add('hidden');
+
+  if (FIREBASE_READY) {
+    // Fetch from Firebase
+    firebase.database().ref('leaderboards/' + mode)
+      .once('value')
+      .then(snapshot => {
+        const val = snapshot.val();
+        let scores = [];
+        if (val) {
+          scores = Object.values(val);
+        }
+        
+        // Sort ascending by time
+        scores.sort((a, b) => a.time - b.time);
+        
+        // Take top 10
+        scores = scores.slice(0, 10);
+        
+        renderScoresList(scores);
+      })
+      .catch(err => {
+        console.error("Firebase leaderboard fetch error, using local fallback:", err);
+        loadLocalLeaderboard(mode);
+      });
+  } else {
+    loadLocalLeaderboard(mode);
+  }
+}
+
+function loadLocalLeaderboard(mode) {
+  try {
+    const localLeaderboard = JSON.parse(localStorage.getItem('dp_local_leaderboard') || '{}');
+    let scores = localLeaderboard[mode] || [];
+    scores.sort((a, b) => a.time - b.time);
+    scores = scores.slice(0, 10);
+    renderScoresList(scores);
+  } catch (e) {
+    console.error("Local leaderboard fetch error:", e);
+    renderScoresList([]);
+  }
+}
+
+function renderScoresList(scores) {
+  leaderboardLoading.classList.add('hidden');
+  if (scores.length === 0) {
+    leaderboardNoEntries.classList.remove('hidden');
+    return;
+  }
+  
+  scores.forEach((entry, index) => {
+    const rank = index + 1;
+    const row = document.createElement('tr');
+    row.className = `leaderboard-row-${rank <= 3 ? rank : 'other'}`;
+    
+    // Create rank cell with badge
+    const rankTd = document.createElement('td');
+    rankTd.style.padding = '10px 8px';
+    const badge = document.createElement('span');
+    badge.className = 'leaderboard-rank-badge';
+    badge.textContent = rank;
+    rankTd.appendChild(badge);
+    
+    // Name cell
+    const nameTd = document.createElement('td');
+    nameTd.style.padding = '10px 8px';
+    nameTd.textContent = entry.name || 'Anonymous';
+    
+    // Time cell
+    const timeTd = document.createElement('td');
+    timeTd.style.padding = '10px 8px';
+    timeTd.style.textAlign = 'right';
+    timeTd.textContent = formatSeconds(entry.time);
+    
+    row.appendChild(rankTd);
+    row.appendChild(nameTd);
+    row.appendChild(timeTd);
+    
+    leaderboardEntries.appendChild(row);
+  });
+}
+
+// Bind events
+if (menuLeaderboardBtn && leaderboardOverlay && closeLeaderboardBtn) {
+  menuLeaderboardBtn.addEventListener('click', () => {
+    leaderboardOverlay.classList.remove('hidden');
+    loadLeaderboards('classic');
+  });
+
+  closeLeaderboardBtn.addEventListener('click', () => {
+    leaderboardOverlay.classList.add('hidden');
+  });
+
+  tabClassicLeaderboard.addEventListener('click', () => {
+    if (activeLeaderboardTab !== 'classic') {
+      loadLeaderboards('classic');
+    }
+  });
+
+  tabHiddenLeaderboard.addEventListener('click', () => {
+    if (activeLeaderboardTab !== 'hidden') {
+      loadLeaderboards('hidden');
+    }
+  });
+}
+
+// Check if showLeaderboard=true in query params to open instantly
+window.addEventListener('DOMContentLoaded', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('showLeaderboard') === 'true') {
+    if (leaderboardOverlay) {
+      leaderboardOverlay.classList.remove('hidden');
+      loadLeaderboards('classic');
+    }
+  }
+});

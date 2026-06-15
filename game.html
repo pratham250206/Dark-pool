@@ -94,6 +94,10 @@
       
       <div class="topbar-stats">
         <div class="stat-chip">
+          <span class="stat-label">Elapsed</span>
+          <span class="stat-value" id="gameTimerVal">00:00</span>
+        </div>
+        <div class="stat-chip">
           <span class="stat-label">Attempts</span>
           <span class="stat-value" id="attemptsVal">0</span>
         </div>
@@ -159,10 +163,15 @@
           <span class="win-stat-label">Hints Used</span>
           <span class="win-stat-value" id="finalHints">0 / 3</span>
         </div>
+        <div class="win-stat">
+          <span class="win-stat-label">Time Taken</span>
+          <span class="win-stat-value" id="finalTime">0m 00s</span>
+        </div>
       </div>
 
       <div class="overlay-actions">
         <button class="btn btn-ghost" id="menuBtn">Main Menu</button>
+        <button class="btn btn-secondary" id="winLeaderboardBtn">🏆 Leaderboard</button>
         <button class="btn btn-primary" id="playAgainBtn">Play Again</button>
       </div>
     </div>

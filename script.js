@@ -232,6 +232,7 @@ const backBtn       = $('backBtn');
 const playBtn       = $('playBtn');
 const playAgainBtn  = $('playAgainBtn');
 const menuBtn       = $('menuBtn');
+const winLeaderboardBtn = $('winLeaderboardBtn');
 const hintBtn       = $('hintBtn');
 const closeHintBtn  = $('closeHintBtn');
 
@@ -246,6 +247,8 @@ const hintMsg       = $('hintMsg');
 const finalPoints   = $('finalPoints');
 const finalAttempts = $('finalAttempts');
 const finalHints    = $('finalHints');
+const finalTime     = $('finalTime');
+const gameTimerVal  = $('gameTimerVal');
 
 const gameModeTitle = $('gameModeTitle');
 const gameModeLabel = $('gameModeLabel');
@@ -273,6 +276,8 @@ let points         = 0;
 let isDragging     = false;
 let selected    = [];   // currently highlighted cell DOM elements
 let shuffleTimer = null;
+let gameTimerInterval = null;
+let gameElapsedSeconds = 0;
 
 /* ═══════════════════════════════════════════════
    PURE HELPERS
@@ -281,6 +286,78 @@ const randInt    = n  => Math.floor(Math.random() * n);
 const randLetter = () => ALPHABET[randInt(ALPHABET.length)];
 const show       = el => el.classList.remove('hidden');
 const hide       = el => el.classList.add('hidden');
+
+function startLiveTimer() {
+  clearInterval(gameTimerInterval);
+  gameElapsedSeconds = 0;
+  if (gameTimerVal) gameTimerVal.textContent = '00:00';
+  gameTimerInterval = setInterval(() => {
+    gameElapsedSeconds++;
+    if (gameTimerVal) {
+      const mins = Math.floor(gameElapsedSeconds / 60);
+      const secs = gameElapsedSeconds % 60;
+      gameTimerVal.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+  }, 1000);
+}
+
+function stopLiveTimer() {
+  clearInterval(gameTimerInterval);
+}
+
+function formatCompletionTime(totalSeconds) {
+  const mins = Math.floor(totalSeconds / 60);
+  const secs = totalSeconds % 60;
+  return `${mins}m ${secs}s`;
+}
+
+function saveToLeaderboard(mode, seconds) {
+  let playerName = 'Anonymous';
+  
+  if (FIREBASE_READY) {
+    const user = firebase.auth().currentUser;
+    if (user && user.displayName) {
+      playerName = user.displayName;
+    } else if (user && user.email) {
+      playerName = user.email.split('@')[0];
+    }
+    
+    // Save to Firebase Realtime Database
+    const scoreRef = firebase.database().ref('leaderboards/' + mode).push();
+    scoreRef.set({
+      name: playerName,
+      time: seconds,
+      timestamp: firebase.database.ServerValue.TIMESTAMP
+    }).catch(err => {
+      console.error("Failed to save leaderboard score to Firebase:", err);
+    });
+  } else {
+    // Offline/Local Storage mode
+    const stored = JSON.parse(localStorage.getItem('dp_user') || 'null');
+    if (stored && stored.name) {
+      playerName = stored.name;
+    }
+  }
+
+  // Always save locally to "dp_local_leaderboard" as backup/offline stats
+  try {
+    const localLeaderboard = JSON.parse(localStorage.getItem('dp_local_leaderboard') || '{}');
+    if (!localLeaderboard[mode]) {
+      localLeaderboard[mode] = [];
+    }
+    localLeaderboard[mode].push({
+      name: playerName,
+      time: seconds,
+      timestamp: Date.now()
+    });
+    // Sort local leaderboard by time ascending, slice top 50
+    localLeaderboard[mode].sort((a, b) => a.time - b.time);
+    localLeaderboard[mode] = localLeaderboard[mode].slice(0, 50);
+    localStorage.setItem('dp_local_leaderboard', JSON.stringify(localLeaderboard));
+  } catch (e) {
+    console.error("Local storage leaderboard save error:", e);
+  }
+}
 
 /** Fisher-Yates shuffle on a copy of arr */
 function shuffled(arr) {
@@ -446,6 +523,7 @@ function startGame() {
   isDragging = false;
   selected   = [];
   clearInterval(shuffleTimer);
+  stopLiveTimer();
 
   updateStats();
   hide(introOverlay);
@@ -463,14 +541,20 @@ function startGame() {
 
   // Kick off background shuffle
   shuffleTimer = setInterval(shuffleFiller, SHUFFLE_MS);
+  startLiveTimer();
 }
 
 function endGame() {
   clearInterval(shuffleTimer);
+  stopLiveTimer();
   finalPoints.textContent   = `${points} pts`;
   finalAttempts.textContent = attempts;
   finalHints.textContent    = `${hintsUsed} / ${INIT_HINTS}`;
+  if (finalTime) {
+    finalTime.textContent = formatCompletionTime(gameElapsedSeconds);
+  }
   show(winOverlay);
+  saveToLeaderboard(gameMode, gameElapsedSeconds);
 }
 
 /** Pulse the first-letter cell of a random unfound word for 3 seconds */
@@ -597,6 +681,12 @@ playAgainBtn.addEventListener('click', startGame);
 menuBtn.addEventListener('click', () => {
   window.location.href = 'menu.html';
 });
+
+if (winLeaderboardBtn) {
+  winLeaderboardBtn.addEventListener('click', () => {
+    window.location.href = 'menu.html?showLeaderboard=true';
+  });
+}
 
 if (exitToMenuBtn) {
   exitToMenuBtn.addEventListener('click', () => {
