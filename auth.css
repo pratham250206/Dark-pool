@@ -53,12 +53,18 @@ html, body.auth-body {
   font-size: 3rem;
   margin-bottom: 6px;
   filter: drop-shadow(0 0 16px rgba(240,180,10,.6));
-  animation: logoPulse 2.8s ease-in-out infinite;
+  animation: logoBouncePulse 2.4s ease-in-out infinite;
 }
 
-@keyframes logoPulse {
-  0%, 100% { filter: drop-shadow(0 0 10px rgba(240,180,10,.4)); }
-  50%       { filter: drop-shadow(0 0 24px rgba(240,180,10,.8)); }
+@keyframes logoBouncePulse {
+  0%, 100% { 
+    transform: translateY(0);
+    filter: drop-shadow(0 0 10px rgba(240,180,10,.4)); 
+  }
+  50% { 
+    transform: translateY(-8px);
+    filter: drop-shadow(0 8px 24px rgba(240,180,10,.8)); 
+  }
 }
 
 .auth-title {
