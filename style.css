@@ -83,8 +83,11 @@ body {
   inset: 0;
   z-index: 200;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  padding: 40px 16px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   /* dark amber blur — feels like looking through frosted amber glass */
   background: rgba(60, 30, 5, .55);
   backdrop-filter: blur(12px);
@@ -92,11 +95,12 @@ body {
 }
 
 .overlay-card {
+  margin: auto 0;
   background: var(--surface);
   border-radius: 28px;
   padding: 44px 52px;
   max-width: 540px;
-  width: 92%;
+  width: 100%;
   text-align: center;
   box-shadow: 0 24px 80px rgba(0,0,0,.22), 0 2px 0 rgba(255,255,255,.8) inset;
   animation: cardIn .4s cubic-bezier(.22,.68,0,1.2);
@@ -266,8 +270,11 @@ body {
   inset: 0;
   z-index: 300;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  padding: 20px 16px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   background: rgba(120,50,10,.4);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -280,6 +287,7 @@ body {
 }
 
 .popup-card {
+  margin: auto 0;
   background: var(--surface);
   border-radius: 24px;
   padding: 34px 38px;
@@ -771,7 +779,7 @@ body {
 
   .word-list {
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     overflow-y: hidden;
     overflow-x: auto;
     gap: 5px;

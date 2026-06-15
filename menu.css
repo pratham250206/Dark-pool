@@ -2,11 +2,15 @@
    menu.css — Main menu page styles
 ═══════════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
+html, body.menu-body {
+  overflow: auto !important;
+  height: auto;
+  min-height: 100%;
+}
 
 .menu-body {
   font-family: 'Inter', sans-serif;
-  min-height: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -276,3 +280,91 @@ html, body { height: 100%; }
 .btn-mode:active { filter: brightness(.92);  transform: translateY(1px);  }
 
 .hidden { display: none !important; }
+
+/* ── Responsive Mobile ── */
+@media (max-width: 480px) {
+  .menu-topbar {
+    padding: 0 16px;
+    height: 56px;
+  }
+  
+  .menu-brand-name {
+    font-size: 0.95rem;
+  }
+  
+  .logo-hex {
+    font-size: 1.3rem;
+  }
+  
+  .menu-user {
+    gap: 8px;
+  }
+  
+  .user-avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 0.85rem;
+  }
+  
+  .user-name {
+    font-size: 0.8rem;
+  }
+  
+  .btn-signout {
+    padding: 4px 10px;
+    font-size: 0.72rem;
+  }
+  
+  .menu-main {
+    padding: 24px 12px;
+    gap: 20px;
+  }
+  
+  .menu-pick {
+    font-size: 1.55rem;
+  }
+  
+  .menu-pick-sub {
+    font-size: 0.82rem;
+  }
+  
+  .mode-grid {
+    gap: 12px;
+  }
+  
+  .mode-card {
+    padding: 20px 18px;
+    border-radius: 20px;
+    gap: 8px;
+  }
+  
+  .mode-icon {
+    font-size: 2.2rem;
+  }
+  
+  .mode-badge {
+    top: 14px;
+    right: 14px;
+    font-size: 0.6rem;
+    padding: 2px 8px;
+  }
+  
+  .mode-name {
+    font-size: 1.3rem;
+  }
+  
+  .mode-desc {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+  
+  .mode-features {
+    font-size: 0.76rem;
+  }
+  
+  .btn-mode {
+    padding: 10px;
+    font-size: 0.9rem;
+    border-radius: 12px;
+  }
+}
