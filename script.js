@@ -284,6 +284,101 @@ let gameTimerInterval = null;
 let gameElapsedSeconds = 0;
 
 /* ═══════════════════════════════════════════════
+   AUDIO SYNTHESIZER
+═══════════════════════════════════════════════ */
+let audioCtx = null;
+let soundMuted = localStorage.getItem('dp_sound_muted') === 'true';
+
+const muteBtn = $('muteBtn');
+
+function initAudio() {
+  if (audioCtx) return;
+  try {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  } catch (err) {
+    console.error("Web Audio API not supported:", err);
+  }
+}
+
+function updateMuteBtn() {
+  if (muteBtn) {
+    muteBtn.textContent = soundMuted ? '🔇' : '🔊';
+  }
+}
+
+function toggleSound() {
+  initAudio();
+  soundMuted = !soundMuted;
+  localStorage.setItem('dp_sound_muted', soundMuted);
+  updateMuteBtn();
+  if (!soundMuted) {
+    playSynthTone(523.25, 'sine', 0.1, 0.1);
+  }
+}
+
+function playSynthTone(frequency, type, duration, volume = 0.1, stopDelay = 0.05) {
+  if (soundMuted || !audioCtx) return;
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  try {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    
+    // Customize oscillator type based on saved synth wave shape setting
+    const savedSynth = localStorage.getItem('dp_synth_type') || 'sine';
+    osc.type = (type === 'sine') ? savedSynth : type;
+    
+    osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+    gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration + stopDelay);
+  } catch (e) {
+    console.warn("Sound play failed", e);
+  }
+}
+
+function playSuccessSound() {
+  initAudio();
+  playSynthTone(523.25, 'sine', 0.12, 0.12);
+  setTimeout(() => playSynthTone(659.25, 'sine', 0.12, 0.12), 100);
+  setTimeout(() => playSynthTone(783.99, 'sine', 0.2, 0.15), 200);
+}
+
+function playErrorSound() {
+  initAudio();
+  playSynthTone(130.81, 'triangle', 0.35, 0.25);
+  playSynthTone(125.00, 'sawtooth', 0.35, 0.05);
+}
+
+function playGameOverSound() {
+  initAudio();
+  if (soundMuted || !audioCtx) return;
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  try {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(500, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 1.2);
+    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.2);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 1.3);
+  } catch(e){}
+}
+
+function playDragSound() {
+  initAudio();
+  playSynthTone(400, 'sine', 0.02, 0.02);
+}
+
+/* ═══════════════════════════════════════════════
    PURE HELPERS
 ═══════════════════════════════════════════════ */
 const randInt    = n  => Math.floor(Math.random() * n);
@@ -558,6 +653,7 @@ function endGame() {
     finalTime.textContent = formatCompletionTime(gameElapsedSeconds);
   }
   show(winOverlay);
+  playGameOverSound();
   saveToLeaderboard(gameMode, gameElapsedSeconds);
 }
 
@@ -605,6 +701,7 @@ boardEl.addEventListener('pointerdown', e => {
   isDragging = true;
   selected   = [cell];
   cell.classList.add('selected');
+  playDragSound();
 });
 
 boardEl.addEventListener('pointermove', e => {
@@ -614,6 +711,7 @@ boardEl.addEventListener('pointermove', e => {
   if (underEl && underEl.classList.contains('cell') && !selected.includes(underEl)) {
     selected.push(underEl);
     underEl.classList.add('selected');
+    playDragSound();
   }
 });
 
@@ -644,6 +742,7 @@ boardEl.addEventListener('pointerup', e => {
     });
     markWordFound(matched);
     selected = [];
+    playSuccessSound();
 
     if (foundWords.size >= TOTAL_WORDS) {
       setTimeout(endGame, 900);
@@ -652,6 +751,7 @@ boardEl.addEventListener('pointerup', e => {
     // Wrong
     selected.forEach(c => c.classList.add('wrong'));
     const snap = [...selected]; // preserve ref before timeout clears it
+    playErrorSound();
     setTimeout(() => {
       snap.forEach(c => c.classList.remove('selected', 'wrong'));
       selected = [];
@@ -708,3 +808,8 @@ if (welcomeCloseBtn) {
 hintBtn.addEventListener('click', useHint);
 
 closeHintBtn.addEventListener('click', () => hide(hintPopup));
+
+if (muteBtn) {
+  muteBtn.addEventListener('click', toggleSound);
+  updateMuteBtn();
+}

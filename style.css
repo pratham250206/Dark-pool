@@ -1563,3 +1563,21 @@ body {
   background: rgba(200, 225, 205, 0.3);
   border-color: rgba(80, 110, 85, 0.25);
 }
+
+/* ── Mute Button ── */
+.btn-mute {
+  border: none;
+  background: transparent;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  transition: transform .15s ease, background .15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-mute:hover {
+  transform: scale(1.15);
+  background: rgba(255, 255, 255, 0.08);
+}
