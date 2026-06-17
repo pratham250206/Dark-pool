@@ -182,31 +182,57 @@ function loadLeaderboards(mode) {
   leaderboardLoading.classList.remove('hidden');
   leaderboardNoEntries.classList.add('hidden');
 
-  if (FIREBASE_READY) {
-    // Fetch from Firebase
-    firebase.database().ref('leaderboards/' + mode)
-      .once('value')
-      .then(snapshot => {
-        const val = snapshot.val();
-        let scores = [];
-        if (val) {
-          scores = Object.values(val);
-        }
-        
-        // Sort ascending by time
-        scores.sort((a, b) => a.time - b.time);
-        
-        // Take top 10
-        scores = scores.slice(0, 10);
-        
-        renderScoresList(scores);
-      })
-      .catch(err => {
-        console.error("Firebase leaderboard fetch error, using local fallback:", err);
-        loadLocalLeaderboard(mode);
-      });
-  } else {
-    loadLocalLeaderboard(mode);
+  let resolved = false;
+  const firebaseTimeout = setTimeout(() => {
+    if (!resolved) {
+      resolved = true;
+      console.warn("Firebase database load timed out. Using local fallback.");
+      loadLocalLeaderboard(mode);
+    }
+  }, 3000);
+
+  try {
+    if (FIREBASE_READY) {
+      // Fetch from Firebase
+      firebase.database().ref('leaderboards/' + mode)
+        .once('value')
+        .then(snapshot => {
+          if (resolved) return;
+          resolved = true;
+          clearTimeout(firebaseTimeout);
+          const val = snapshot.val();
+          let scores = [];
+          if (val) {
+            scores = Object.values(val);
+          }
+          
+          // Sort ascending by time
+          scores.sort((a, b) => a.time - b.time);
+          
+          // Take top 10
+          scores = scores.slice(0, 10);
+          
+          renderScoresList(scores);
+        })
+        .catch(err => {
+          if (resolved) return;
+          resolved = true;
+          clearTimeout(firebaseTimeout);
+          console.error("Firebase leaderboard fetch error, using local fallback:", err);
+          loadLocalLeaderboard(mode);
+        });
+    } else {
+      resolved = true;
+      clearTimeout(firebaseTimeout);
+      loadLocalLeaderboard(mode);
+    }
+  } catch (err) {
+    if (!resolved) {
+      resolved = true;
+      clearTimeout(firebaseTimeout);
+      console.error("Firebase query initiation error, using local fallback:", err);
+      loadLocalLeaderboard(mode);
+    }
   }
 }
 
