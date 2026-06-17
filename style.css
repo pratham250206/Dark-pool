@@ -1478,20 +1478,11 @@ body {
 .leaderboard-row-1 {
   background: rgba(212, 175, 55, 0.15);
 }
-.leaderboard-row-1 td {
-  color: #ffd700 !important;
-}
 .leaderboard-row-2 {
   background: rgba(192, 192, 192, 0.12);
 }
-.leaderboard-row-2 td {
-  color: #dfdfdf !important;
-}
 .leaderboard-row-3 {
   background: rgba(205, 127, 50, 0.10);
-}
-.leaderboard-row-3 td {
-  color: #cd7f32 !important;
 }
 
 .leaderboard-rank-badge {
