@@ -35,10 +35,10 @@ html, body.menu-body {
   justify-content: space-between;
   padding: 0 28px;
   height: 62px;
-  background: rgba(80, 45, 12, 0.72);
+  background: var(--topbar-bg);
   backdrop-filter: blur(16px) saturate(1.5);
   -webkit-backdrop-filter: blur(16px) saturate(1.5);
-  border-bottom: 1.5px solid rgba(180,120,40,.4);
+  border-bottom: 1.5px solid var(--topbar-border);
   box-shadow: 0 3px 18px rgba(0,0,0,.2);
   flex-shrink: 0;
 }
@@ -58,7 +58,7 @@ html, body.menu-body {
   font-family: 'Nunito', sans-serif;
   font-size: 1.1rem;
   font-weight: 900;
-  color: #f0c060;
+  color: var(--topbar-title-color);
   text-shadow: 0 1px 4px rgba(0,0,0,.4);
 }
 
@@ -72,8 +72,8 @@ html, body.menu-body {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: rgba(200,140,30,.8);
-  border: 2px solid rgba(240,195,80,.6);
+  background: var(--accent);
+  border: 2px solid var(--accent-light);
   display: grid;
   place-items: center;
   font-family: 'Nunito', sans-serif;
@@ -87,15 +87,15 @@ html, body.menu-body {
   font-family: 'Nunito', sans-serif;
   font-weight: 800;
   font-size: .9rem;
-  color: rgba(255,235,180,.9);
+  color: var(--accent-light);
 }
 
 .btn-signout {
   padding: 6px 14px;
-  border: 1.5px solid rgba(200,150,60,.5);
+  border: 1.5px solid var(--border);
   border-radius: 10px;
-  background: rgba(255,245,210,.1);
-  color: rgba(255,225,140,.85);
+  background: rgba(255,255,255,.05);
+  color: var(--text-dim);
   font-family: 'Inter', sans-serif;
   font-size: .78rem;
   font-weight: 700;
@@ -103,14 +103,14 @@ html, body.menu-body {
   transition: background .2s;
 }
 
-.btn-signout:hover { background: rgba(255,245,210,.2); }
+.btn-signout:hover { background: rgba(255,255,255,.12); color: var(--text); }
 
 .btn-settings {
   padding: 6px 14px;
-  border: 1.5px solid rgba(200, 150, 60, 0.5);
+  border: 1.5px solid var(--border-strong);
   border-radius: 10px;
-  background: rgba(200, 140, 30, 0.2);
-  color: #f0c060;
+  background: var(--surface-soft);
+  color: var(--accent);
   font-family: 'Inter', sans-serif;
   font-size: 0.78rem;
   font-weight: 700;
@@ -119,7 +119,7 @@ html, body.menu-body {
 }
 
 .btn-settings:hover {
-  background: rgba(200, 140, 30, 0.35);
+  background: var(--surface);
 }
 
 .btn-settings:active {
@@ -143,14 +143,14 @@ html, body.menu-body {
   font-family: 'Nunito', sans-serif;
   font-size: 2rem;
   font-weight: 900;
-  color: #f5e0a0;
+  color: var(--accent-light);
   text-shadow: 0 2px 10px rgba(0,0,0,.5);
   margin-bottom: 6px;
 }
 
 .menu-pick-sub {
   font-size: .92rem;
-  color: rgba(255,230,160,.7);
+  color: var(--text-dim);
   text-shadow: 0 1px 4px rgba(0,0,0,.4);
 }
 
@@ -169,8 +169,8 @@ html, body.menu-body {
 
 /* ── Mode card ── */
 .mode-card {
-  background: rgba(240, 215, 155, 0.88);
-  border: 2px solid rgba(200,155,65,.55);
+  background: var(--surface);
+  border: 2px solid var(--border-strong);
   border-radius: 24px;
   padding: 28px 26px;
   display: flex;
@@ -179,7 +179,7 @@ html, body.menu-body {
   position: relative;
   cursor: pointer;
   transition: transform .2s, box-shadow .2s;
-  box-shadow: 0 8px 30px rgba(0,0,0,.2), 0 1px 0 rgba(255,240,180,.55) inset;
+  box-shadow: 0 8px 30px rgba(0,0,0,.2), 0 1px 0 var(--board-inset-glow) inset;
   animation: cardIn .5s cubic-bezier(.22,.68,0,1.2) both;
 }
 
@@ -242,7 +242,7 @@ html, body.menu-body {
   font-family: 'Nunito', sans-serif;
   font-size: 1.55rem;
   font-weight: 900;
-  color: #2a1200;
+  color: var(--text);
   letter-spacing: -.01em;
 }
 
@@ -250,10 +250,10 @@ html, body.menu-body {
 .mode-desc {
   font-size: .88rem;
   line-height: 1.6;
-  color: #5c3a10;
+  color: var(--text-mid);
 }
 
-.mode-desc strong { color: #8b4a00; }
+.mode-desc strong { color: var(--accent-dark); }
 
 /* Features list */
 .mode-features {
@@ -262,7 +262,7 @@ html, body.menu-body {
   flex-direction: column;
   gap: 5px;
   font-size: .82rem;
-  color: #6b4518;
+  color: var(--text-dim);
   flex: 1;
 }
 

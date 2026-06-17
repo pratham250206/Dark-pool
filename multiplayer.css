@@ -63,13 +63,13 @@
 
 .lobby-card {
   margin: auto 0;
-  background: rgba(240, 215, 155, 0.94);
-  border: 2px solid rgba(190, 145, 65, 0.55);
+  background: var(--surface);
+  border: 2px solid var(--border-strong);
   border-radius: 28px;
   padding: 36px 40px;
   max-width: 760px;
   width: 100%;
-  box-shadow: 0 16px 48px rgba(0,0,0,.35), 0 2px 0 rgba(255,255,255,.8) inset;
+  box-shadow: 0 16px 48px rgba(0,0,0,.35), 0 2px 0 var(--board-inset-glow) inset;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -89,20 +89,20 @@
   font-family: 'Nunito', sans-serif;
   font-size: 1.8rem;
   font-weight: 900;
-  color: #2a1200;
+  color: var(--accent);
   margin-top: 8px;
   margin-bottom: 4px;
 }
 
 .lobby-header p {
   font-size: .88rem;
-  color: #5c3a10;
+  color: var(--text-mid);
 }
 
 /* Mode indicator alerts */
 .mode-alert {
-  background: rgba(100, 60, 18, 0.12);
-  border: 1.5px solid rgba(160, 110, 45, 0.25);
+  background: var(--surface-soft);
+  border: 1.5px solid var(--border);
   border-radius: 12px;
   padding: 8px 16px;
   display: flex;
@@ -110,7 +110,7 @@
   gap: 10px;
   font-size: .8rem;
   font-weight: 700;
-  color: #5a3c1a;
+  color: var(--text);
   justify-content: center;
 }
 
@@ -138,8 +138,8 @@
 }
 
 .choice-box {
-  background: rgba(230, 205, 140, 0.45);
-  border: 1.5px solid rgba(180, 130, 50, 0.25);
+  background: var(--surface-soft);
+  border: 1.5px solid var(--border);
   border-radius: 18px;
   padding: 24px;
   display: flex;
@@ -152,12 +152,12 @@
   font-family: 'Nunito', sans-serif;
   font-size: 1.15rem;
   font-weight: 800;
-  color: #8b4a00;
+  color: var(--accent);
 }
 
 .choice-box p {
   font-size: .78rem;
-  color: #6c471c;
+  color: var(--text);
   line-height: 1.5;
   flex: 1;
 }
@@ -168,7 +168,7 @@
   justify-content: center;
   font-weight: 800;
   font-size: .82rem;
-  color: #a07840;
+  color: var(--text-dim);
   text-transform: uppercase;
 }
 
@@ -176,7 +176,7 @@
 .choice-divider::after {
   content: '';
   height: 1.5px;
-  background: rgba(180, 130, 50, 0.25);
+  background: var(--border);
   width: 20px;
   margin: 0 10px;
 }
@@ -194,10 +194,10 @@
   height: 44px;
   box-sizing: border-box;
   padding: 0 14px;
-  border: 2px solid rgba(180, 130, 50, 0.4);
+  border: 2px solid var(--border-strong);
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.85);
-  color: #2a1200;
+  background: var(--surface);
+  color: var(--text);
   font-weight: 800;
   font-size: 1.05rem;
   letter-spacing: .08em;
@@ -207,7 +207,7 @@
 }
 
 #roomCodeInput:focus {
-  border-color: #c47d1a;
+  border-color: var(--accent);
 }
 
 #joinRoomBtn {
@@ -229,8 +229,8 @@
 
 /* Waiting Room */
 .code-display-box {
-  background: rgba(100, 60, 18, 0.82);
-  border: 1.5px solid rgba(180, 120, 40, 0.45);
+  background: var(--topbar-bg);
+  border: 1.5px solid var(--topbar-border);
   border-radius: 18px;
   padding: 16px;
   display: flex;
@@ -257,7 +257,7 @@
   font-family: 'Courier New', Courier, monospace;
   font-weight: 900;
   font-size: 1.8rem;
-  color: #f5c842;
+  color: var(--accent-light);
   letter-spacing: .05em;
   text-shadow: 0 2px 5px rgba(0,0,0,.3);
 }
@@ -278,8 +278,8 @@
 }
 
 .lobby-players-section {
-  background: rgba(230, 205, 140, 0.35);
-  border: 1.5px solid rgba(180, 130, 50, 0.2);
+  background: var(--surface-soft);
+  border: 1.5px solid var(--border);
   border-radius: 18px;
   padding: 20px;
   display: flex;
@@ -291,8 +291,8 @@
 .lobby-players-section h3 {
   font-size: .88rem;
   font-weight: 800;
-  color: #5c3a10;
-  border-bottom: 1.5px solid rgba(180, 130, 50, 0.15);
+  color: var(--text-mid);
+  border-bottom: 1.5px solid var(--border);
   padding-bottom: 6px;
 }
 
@@ -310,17 +310,17 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 14px;
-  background: rgba(255,255,255,.55);
-  border: 1px solid rgba(180, 130, 50, 0.15);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 10px;
   font-size: .88rem;
   font-weight: 700;
-  color: #3e240c;
+  color: var(--text);
 }
 
 .player-item.is-me {
-  background: rgba(245, 228, 185, 0.95);
-  border-color: rgba(220, 160, 50, 0.4);
+  background: var(--surface-soft);
+  border-color: var(--accent);
 }
 
 .player-status-badge {
@@ -331,8 +331,8 @@
 }
 
 .player-status-badge.host {
-  background: rgba(140, 80, 10, 0.15);
-  color: #8b4a00;
+  background: var(--accent-dark);
+  color: #fff;
 }
 
 .player-status-badge.waiting {
@@ -386,17 +386,17 @@
   align-items: center;
   justify-content: space-between;
   padding: 8px 12px;
-  background: rgba(100, 60, 18, 0.68);
-  border: 1.5px solid rgba(180, 120, 40, 0.35);
+  background: var(--surface-soft);
+  border: 1.5px solid var(--border);
   border-radius: 12px;
   font-size: .8rem;
   font-weight: 800;
-  color: rgba(255, 235, 180, 0.85);
+  color: var(--text-mid);
 }
 
 .scoreboard-item.is-me {
-  background: rgba(160, 90, 15, 0.82);
-  border-color: rgba(220, 160, 50, 0.55);
+  background: var(--accent-dark);
+  border-color: var(--accent);
   color: #fff;
 }
 
@@ -409,7 +409,7 @@
 
 .scoreboard-score {
   font-weight: 900;
-  color: #f5c842;
+  color: var(--accent-light);
   font-family: 'Nunito', sans-serif;
 }
 
@@ -450,8 +450,8 @@
 .chat-sidebar {
   width: 260px;
   flex-shrink: 0;
-  background: rgba(240, 215, 155, 0.88);
-  border: 2px solid rgba(190, 145, 65, 0.55);
+  background: var(--surface);
+  border: 2px solid var(--border-strong);
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -461,8 +461,8 @@
 
 .chat-header {
   padding: 12px 14px;
-  background: rgba(80, 45, 12, 0.8);
-  border-bottom: 1.5px solid rgba(180, 120, 40, 0.4);
+  background: var(--topbar-bg);
+  border-bottom: 1.5px solid var(--topbar-border);
   flex-shrink: 0;
 }
 
@@ -470,7 +470,7 @@
   font-family: 'Nunito', sans-serif;
   font-weight: 800;
   font-size: .85rem;
-  color: #f0c060;
+  color: var(--topbar-title-color);
   text-transform: uppercase;
   letter-spacing: .05em;
 }
@@ -489,26 +489,26 @@
   flex-direction: column;
   gap: 2px;
   padding: 8px 10px;
-  background: rgba(255,255,255,.55);
+  background: var(--surface-soft);
   border-radius: 10px;
   max-width: 90%;
   align-self: flex-start;
   font-size: .8rem;
   line-height: 1.4;
-  color: #2a1200;
+  color: var(--text);
   box-shadow: 0 1px 3px rgba(0,0,0,.08);
 }
 
 .chat-msg.is-me {
   align-self: flex-end;
-  background: rgba(255, 238, 190, 0.9);
-  border: 1px solid rgba(220, 160, 50, 0.25);
+  background: var(--surface);
+  border: 1px solid var(--accent);
 }
 
 .chat-msg.is-system {
   align-self: center;
-  background: rgba(140, 80, 10, 0.12);
-  color: #8b4a00;
+  background: var(--topbar-bg);
+  color: var(--topbar-title-color);
   font-weight: 700;
   font-size: .72rem;
   text-align: center;
@@ -524,7 +524,7 @@
   gap: 8px;
   font-size: .65rem;
   font-weight: 800;
-  color: #8b4a00;
+  color: var(--accent-dark);
 }
 
 .msg-text {
@@ -572,17 +572,17 @@
 #chatInput {
   flex: 1;
   padding: 8px 12px;
-  border: 1.5px solid rgba(180, 130, 50, 0.3);
+  border: 1.5px solid var(--border-strong);
   border-radius: 8px;
-  background: #fff;
-  color: #2a1200;
+  background: var(--surface);
+  color: var(--text);
   font-size: .8rem;
   font-weight: 600;
   outline: none;
 }
 
 #chatInput:focus {
-  border-color: #c47d1a;
+  border-color: var(--accent);
 }
 
 .chat-send {
@@ -593,8 +593,8 @@
 
 /* Rankings on Victory Screen */
 .rankings-box {
-  background: rgba(230, 205, 140, 0.45);
-  border: 1.5px solid rgba(180, 130, 50, 0.25);
+  background: var(--surface-soft);
+  border: 1.5px solid var(--border);
   border-radius: 18px;
   padding: 16px;
   margin-bottom: 24px;
@@ -604,9 +604,9 @@
 .rankings-box h3 {
   font-size: .88rem;
   font-weight: 800;
-  color: #8b4a00;
+  color: var(--accent);
   margin-bottom: 10px;
-  border-bottom: 1px solid rgba(180, 130, 50, 0.15);
+  border-bottom: 1px solid var(--border);
   padding-bottom: 4px;
 }
 
@@ -620,17 +620,17 @@
 .rankings-list li {
   font-size: .88rem;
   font-weight: 700;
-  color: #3e240c;
+  color: var(--text);
 }
 
 .rankings-list li strong {
-  color: #c47d1a;
+  color: var(--accent);
 }
 
 /* Lobby Game Mode Selection Settings */
 .lobby-setting-box {
-  background: rgba(230, 205, 140, 0.45);
-  border: 1.5px solid rgba(180, 130, 50, 0.25);
+  background: var(--surface-soft);
+  border: 1.5px solid var(--border);
   border-radius: 14px;
   padding: 12px 20px;
   display: flex;
@@ -642,15 +642,15 @@
 .lobby-setting-box label {
   font-size: .88rem;
   font-weight: 800;
-  color: #5c3a10;
+  color: var(--text);
 }
 
 .lobby-select {
   padding: 8px 12px;
   border-radius: 8px;
-  border: 2px solid rgba(180, 130, 50, 0.4);
-  background: #fff;
-  color: #2a1200;
+  border: 2px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
   font-weight: 700;
   font-size: .85rem;
   outline: none;
@@ -658,17 +658,17 @@
 }
 
 .lobby-select:focus {
-  border-color: #c47d1a;
+  border-color: var(--accent);
 }
 
 .lobby-setting-status {
   font-size: .85rem;
   font-weight: 700;
-  color: #5c3a10;
+  color: var(--text-mid);
 }
 
 .lobby-setting-status strong {
-  color: #c47d1a;
+  color: var(--accent);
   text-transform: uppercase;
 }
 

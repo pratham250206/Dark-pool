@@ -52,18 +52,18 @@ html, body.auth-body {
   display: block;
   font-size: 3rem;
   margin-bottom: 6px;
-  filter: drop-shadow(0 0 16px rgba(240,180,10,.6));
+  filter: drop-shadow(0 0 16px var(--accent-shadow));
   animation: logoBouncePulse 2.4s ease-in-out infinite;
 }
 
 @keyframes logoBouncePulse {
   0%, 100% { 
     transform: translateY(0);
-    filter: drop-shadow(0 0 10px rgba(240,180,10,.4)); 
+    filter: drop-shadow(0 0 10px var(--accent-shadow)); 
   }
   50% { 
     transform: translateY(-8px);
-    filter: drop-shadow(0 8px 24px rgba(240,180,10,.8)); 
+    filter: drop-shadow(0 8px 24px var(--accent-shadow)); 
   }
 }
 
@@ -71,14 +71,14 @@ html, body.auth-body {
   font-family: 'Nunito', sans-serif;
   font-size: 2rem;
   font-weight: 900;
-  color: #f0c060;
+  color: var(--accent-light);
   text-shadow: 0 2px 8px rgba(0,0,0,.5);
   letter-spacing: -.02em;
 }
 
 .auth-sub {
   font-size: .88rem;
-  color: rgba(255,235,180,.8);
+  color: var(--text-dim);
   margin-top: 6px;
   text-shadow: 0 1px 4px rgba(0,0,0,.4);
 }
@@ -86,11 +86,11 @@ html, body.auth-body {
 /* ── Card ── */
 .auth-card {
   width: 100%;
-  background: rgba(245,225,175,.95);
-  border: 2px solid rgba(210,165,70,.55);
+  background: var(--surface);
+  border: 2px solid var(--border-strong);
   border-radius: 24px;
   padding: 30px 32px 28px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.28), 0 1px 0 rgba(255,245,200,.6) inset;
+  box-shadow: 0 20px 60px rgba(0,0,0,.28), 0 1px 0 var(--board-inset-glow) inset;
   animation: slideUp .45s cubic-bezier(.22,.68,0,1.2);
 }
 
@@ -102,7 +102,7 @@ html, body.auth-body {
 /* ── Tabs ── */
 .auth-tabs {
   display: flex;
-  background: rgba(200,155,60,.25);
+  background: var(--surface-soft);
   border-radius: 14px;
   padding: 4px;
   margin-bottom: 22px;
@@ -117,13 +117,13 @@ html, body.auth-body {
   font-family: 'Nunito', sans-serif;
   font-size: .9rem;
   font-weight: 800;
-  color: rgba(80,45,10,.65);
+  color: var(--text-mid);
   cursor: pointer;
   transition: background .2s, color .2s, box-shadow .2s;
 }
 
 .auth-tab.active {
-  background: rgba(200,140,30,.85);
+  background: var(--accent);
   color: #fff;
   box-shadow: 0 2px 8px rgba(0,0,0,.18);
 }
@@ -150,26 +150,26 @@ html, body.auth-body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .07em;
-  color: rgba(80,45,10,.8);
+  color: var(--text-dim);
 }
 
 .field-input {
   padding: 11px 14px;
   border-radius: 12px;
-  border: 2px solid rgba(180,130,50,.35);
-  background: rgba(255,248,220,.85);
+  border: 2px solid var(--border);
+  background: var(--surface-soft);
   font-family: 'Inter', sans-serif;
   font-size: .95rem;
-  color: #2a1400;
+  color: var(--text);
   outline: none;
   transition: border-color .2s, box-shadow .2s;
 }
 
-.field-input::placeholder { color: rgba(130,90,40,.45); }
+.field-input::placeholder { color: var(--text-dim); }
 
 .field-input:focus {
-  border-color: rgba(180,110,10,.7);
-  box-shadow: 0 0 0 3px rgba(200,150,30,.18);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-shadow);
 }
 
 /* ── Submit button ── */
@@ -209,7 +209,7 @@ html, body.auth-body {
   align-items: center;
   gap: 12px;
   margin: 20px 0;
-  color: rgba(100,65,20,.55);
+  color: var(--text-dim);
   font-size: .82rem;
   font-weight: 600;
 }
@@ -219,7 +219,7 @@ html, body.auth-body {
   content: '';
   flex: 1;
   height: 1.5px;
-  background: rgba(180,130,50,.3);
+  background: var(--border);
 }
 
 /* ── Google button ── */
@@ -230,13 +230,13 @@ html, body.auth-body {
   justify-content: center;
   gap: 12px;
   padding: 12px 20px;
-  border: 2px solid rgba(180,130,50,.35);
+  border: 2px solid var(--btn-google-border);
   border-radius: 14px;
-  background: rgba(255,252,240,.92);
+  background: var(--btn-google-bg);
   font-family: 'Nunito', sans-serif;
   font-size: .95rem;
   font-weight: 800;
-  color: #2a1400;
+  color: var(--btn-google-color);
   cursor: pointer;
   box-shadow: 0 2px 10px rgba(0,0,0,.1);
   transition: background .18s, box-shadow .18s, transform .18s;
@@ -255,12 +255,12 @@ html, body.auth-body {
 /* ── Footer ── */
 .auth-footer {
   font-size: .78rem;
-  color: rgba(255,235,180,.7);
+  color: var(--text-dim);
   text-shadow: 0 1px 3px rgba(0,0,0,.4);
   text-align: center;
 }
 
-.auth-footer a { color: rgba(255,220,120,.9); text-decoration: underline; }
+.auth-footer a { color: var(--accent); text-decoration: underline; }
 
 /* Utility */
 .hidden { display: none !important; }

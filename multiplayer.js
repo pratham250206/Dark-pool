@@ -345,7 +345,10 @@ if (FIREBASE_READY) {
 }
 
 // ── Auth Check ──────────────────────────────────────
-if (FIREBASE_READY) {
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const hasGuestSession = localStorage.getItem('dp_user') !== null;
+
+if (FIREBASE_READY && !(isLocal && hasGuestSession)) {
   firebase.auth().onAuthStateChanged(user => {
     if (!user) {
       window.location.href = 'index.html';

@@ -4,7 +4,10 @@
    ═══════════════════════════════════════════════ */
 
 // ── Firebase Init ──────────────────────────────────
-if (FIREBASE_READY) {
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const hasGuestSession = localStorage.getItem('dp_user') !== null;
+
+if (FIREBASE_READY && !(isLocal && hasGuestSession)) {
   firebase.initializeApp(FIREBASE_CONFIG);
   firebase.auth().onAuthStateChanged(user => {
     if (!user) {

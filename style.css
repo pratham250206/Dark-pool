@@ -11,6 +11,7 @@
   --accent:        #c47d1a;   /* burnt amber — pops on wood */
   --accent-light:  #f0c060;
   --accent-dark:   #9a5c0e;
+  --accent-shadow: rgba(196, 125, 26, 0.4);
 
   /* feedback */
   --good:          #2d7a3a;
@@ -44,6 +45,66 @@
   --radius-card:   20px;
   --cell-bg:       rgba(248, 225, 170, 0.90);
   --cell-border:   rgba(190, 145, 65, 0.40);
+
+  /* topbar and headers */
+  --topbar-bg:     rgba(100, 60, 18, 0.68);
+  --topbar-border: rgba(180, 120, 40, 0.45);
+  --topbar-title-color: #f0c060;
+
+  /* stat chips */
+  --stat-chip-bg:           rgba(195, 148, 65, 0.72);
+  --stat-chip-border:       rgba(220, 175, 85, 0.55);
+  --stat-chip-value-color:   #fff5d0;
+  --stat-chip-accent-bg:     rgba(160, 90, 15, 0.90);
+  --stat-chip-accent-border: rgba(200, 130, 40, 0.70);
+
+  /* game board */
+  --board-bg:           rgba(235, 205, 148, 0.88);
+  --board-border:       rgba(200, 155, 70, 0.55);
+  --board-inset-glow:   rgba(255, 240, 180, 0.6);
+  --board-inner-shadow: rgba(120, 70, 10, 0.08);
+
+  /* cell & interactions */
+  --cell-hover-bg:      rgba(225, 175, 80, 0.85);
+  --cell-hover-border:  rgba(180, 120, 30, 0.70);
+  --cell-hover-shadow:  rgba(160, 90, 10, 0.25);
+
+  /* cell hint pulse */
+  --hint-pulse-bg-0:     rgba(250, 200, 50, 0.40);
+  --hint-pulse-border-0: rgba(220, 160, 20, 0.70);
+  --hint-pulse-shadow-0: rgba(240, 180, 10, 0.30);
+  --hint-pulse-bg-50:    rgba(250, 200, 50, 0.90);
+  --hint-pulse-border-50: rgba(200, 130, 10, 1.00);
+  --hint-pulse-shadow-50: rgba(240, 190, 10, 0.55);
+  --hint-pulse-text-50:   #3a1a00;
+
+  /* progress pill */
+  --progress-pill-bg:     rgba(255, 248, 220, 0.94);
+  --progress-pill-border: rgba(210, 160, 60, 0.4);
+  --progress-pill-color:  var(--accent-dark);
+
+  /* word list item */
+  --word-item-bg:       rgba(215, 172, 95, 0.80);
+  --word-item-border:   rgba(175, 125, 45, 0.50);
+  --word-item-inset:    rgba(255, 230, 150, 0.4);
+  --word-item-color:    #2a1400;
+  --word-check-border:  rgba(140, 90, 28, 0.55);
+  --word-check-bg:      rgba(255, 240, 190, 0.30);
+
+  /* hint button inside sidebar */
+  --hint-btn-bg:        rgba(195, 148, 60, 0.82);
+  --hint-btn-border:    rgba(160, 110, 30, 0.55);
+  --hint-btn-color:     #2a1200;
+  --hint-btn-inset:     rgba(255, 220, 120, 0.4);
+  --hint-badge-bg:      rgba(140, 80, 10, 0.90);
+  --hint-badge-border:  rgba(180, 110, 20, 0.70);
+  --hint-badge-color:   #ffe08a;
+
+  /* overlay backgrounds & cards */
+  --overlay-bg:         rgba(60, 30, 5, 0.55);
+  --btn-google-bg:      rgba(255, 252, 240, 0.92);
+  --btn-google-border:  rgba(180, 130, 50, 0.35);
+  --btn-google-color:   #2a1400;
 }
 
 /* ── Reset ─────────────────────────────────── */
@@ -90,8 +151,8 @@ body {
   padding: 40px 16px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  /* dark amber blur — feels like looking through frosted amber glass */
-  background: rgba(60, 30, 5, .55);
+  /* dark blur — inherits themed tint */
+  background: var(--overlay-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -345,11 +406,11 @@ body {
 .btn-primary {
   background: var(--accent);
   color: #fff;
-  box-shadow: 0 4px 14px rgba(249,115,22,.35), 0 1px 0 rgba(255,255,255,.25) inset;
+  box-shadow: 0 4px 14px var(--accent-shadow), 0 1px 0 rgba(255,255,255,.25) inset;
 }
 
 .btn-primary:hover {
-  box-shadow: 0 7px 22px rgba(249,115,22,.45);
+  box-shadow: 0 7px 22px var(--accent-shadow);
 }
 
 .btn-secondary {
@@ -385,11 +446,10 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-  /* deep walnut bar — sits naturally on wood background */
-  background: rgba(100, 60, 18, 0.68);
+  background: var(--topbar-bg);
   backdrop-filter: blur(16px) saturate(1.6);
   -webkit-backdrop-filter: blur(16px) saturate(1.6);
-  border-bottom: 1.5px solid rgba(180, 120, 40, 0.45);
+  border-bottom: 1.5px solid var(--topbar-border);
   box-shadow: 0 3px 18px rgba(0,0,0,.22);
 }
 
@@ -423,7 +483,7 @@ body {
 .topbar-title {
   font-size: 1.05rem;
   font-weight: 900;
-  color: #f0c060;             /* warm gold on dark walnut bar */
+  color: var(--topbar-title-color);
   letter-spacing: -.01em;
   text-shadow: 0 1px 4px rgba(0,0,0,.4);
 }
@@ -437,9 +497,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* honey-oak panel */
-  background: rgba(195, 148, 65, 0.72);
-  border: 1.5px solid rgba(220, 175, 85, 0.55);
+  background: var(--stat-chip-bg);
+  border: 1.5px solid var(--stat-chip-border);
   border-radius: 12px;
   padding: 5px 16px;
   min-width: 70px;
@@ -447,8 +506,8 @@ body {
 }
 
 .stat-chip.accent {
-  background: rgba(160, 90, 15, 0.90);
-  border-color: rgba(200, 130, 40, 0.70);
+  background: var(--stat-chip-accent-bg);
+  border-color: var(--stat-chip-accent-border);
 }
 
 .stat-label {
@@ -465,7 +524,7 @@ body {
 .stat-value {
   font-size: 1.15rem;
   font-weight: 900;
-  color: #fff5d0;   /* warm ivory — reads on dark/amber chip */
+  color: var(--stat-chip-value-color);
 }
 
 .stat-chip.accent .stat-value { color: #fff; }
@@ -504,14 +563,13 @@ body {
   gap: 4px;
   padding: 12px;
 
-  /* light birch / pine tone — lighter than the background wood */
-  background: rgba(235, 205, 148, 0.88);
+  background: var(--board-bg);
   border-radius: var(--radius-card);
-  border: 2px solid rgba(200, 155, 70, 0.55);
+  border: 2px solid var(--board-border);
   box-shadow:
     0 14px 50px rgba(0,0,0,.28),
-    0 2px 0 rgba(255,240,180,.6) inset,
-    inset 0 0 40px rgba(120,70,10,.08);
+    0 2px 0 var(--board-inset-glow) inset,
+    inset 0 0 40px var(--board-inner-shadow);
   user-select: none;
   touch-action: none;
 }
@@ -534,10 +592,10 @@ body {
 }
 
 .cell:hover {
-  background: rgba(225, 175, 80, 0.85);
-  border-color: rgba(180, 120, 30, 0.70);
+  background: var(--cell-hover-bg);
+  border-color: var(--cell-hover-border);
   transform: scale(1.07);
-  box-shadow: 0 3px 12px rgba(160,90,10,.25);
+  box-shadow: 0 3px 12px var(--cell-hover-shadow);
 }
 
 /* Dragging — selected cells */
@@ -546,7 +604,7 @@ body {
   border-color: var(--accent-dark);
   color: #fff;
   transform: scale(1.1);
-  box-shadow: 0 4px 14px rgba(249,115,22,.4);
+  box-shadow: 0 4px 14px var(--accent-shadow);
 }
 
 /* Correct word */
@@ -554,7 +612,7 @@ body {
   background: var(--accent);
   border-color: var(--accent-dark);
   color: #fff;
-  box-shadow: 0 3px 12px rgba(249,115,22,.35);
+  box-shadow: 0 3px 12px var(--accent-shadow);
   animation: correctPop .35s cubic-bezier(.22,.68,0,1.4);
 }
 
@@ -586,22 +644,22 @@ body {
 
 @keyframes hintPulse {
   0%   {
-    background:   rgba(250, 200, 50, 0.40);
-    border-color: rgba(220, 160, 20, 0.70);
-    box-shadow:   0 0 0 3px rgba(240, 180, 10, 0.30);
+    background:   var(--hint-pulse-bg-0);
+    border-color: var(--hint-pulse-border-0);
+    box-shadow:   0 0 0 3px var(--hint-pulse-shadow-0);
     transform:    scale(1);
   }
   50%  {
-    background:   rgba(250, 200, 50, 0.90);
-    border-color: rgba(200, 130, 10, 1.00);
-    box-shadow:   0 0 18px 6px rgba(240, 190, 10, 0.55);
+    background:   var(--hint-pulse-bg-50);
+    border-color: var(--hint-pulse-border-50);
+    box-shadow:   0 0 18px 6px var(--hint-pulse-shadow-50);
     transform:    scale(1.15);
-    color:        #3a1a00;
+    color:        var(--hint-pulse-text-50);
   }
   100% {
-    background:   rgba(250, 200, 50, 0.40);
-    border-color: rgba(220, 160, 20, 0.70);
-    box-shadow:   0 0 0 3px rgba(240, 180, 10, 0.30);
+    background:   var(--hint-pulse-bg-0);
+    border-color: var(--hint-pulse-border-0);
+    box-shadow:   0 0 0 3px var(--hint-pulse-shadow-0);
     transform:    scale(1);
   }
 }
@@ -639,9 +697,9 @@ body {
 .progress-pill {
   font-size: .8rem;
   font-weight: 900;
-  color: var(--accent-dark);
-  background: rgba(255,248,220,.94);
-  border: 2px solid rgba(210,160,60,.4);
+  color: var(--progress-pill-color);
+  background: var(--progress-pill-bg);
+  border: 2px solid var(--progress-pill-border);
   border-radius: 20px;
   padding: 2px 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,.14);
@@ -672,13 +730,12 @@ body {
   align-items: center;
   gap: 10px;
   padding: 10px 14px;
-  /* warm honey-oak plank card — blends with wood grain */
-  background: rgba(215, 172, 95, 0.80);
-  border: 2px solid rgba(175, 125, 45, 0.50);
+  background: var(--word-item-bg);
+  border: 2px solid var(--word-item-border);
   border-radius: 14px;
   box-shadow:
     0 2px 10px rgba(0,0,0,.15),
-    0 1px 0 rgba(255,230,150,.4) inset;
+    0 1px 0 var(--word-item-inset) inset;
   transition: background .25s, border-color .25s, box-shadow .25s;
   min-height: 46px;
 }
@@ -688,14 +745,14 @@ body {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  border: 2.5px solid rgba(140, 90, 28, 0.55);
+  border: 2.5px solid var(--word-check-border);
   flex-shrink: 0;
   display: grid;
   place-items: center;
   font-size: .72rem;
   font-weight: 900;
   color: transparent;
-  background: rgba(255, 240, 190, 0.30);
+  background: var(--word-check-bg);
   transition: background .25s, border-color .25s, color .25s;
 }
 
@@ -705,7 +762,7 @@ body {
   font-size: .9rem;
   font-weight: 900;
   letter-spacing: .04em;
-  color: #2a1400;             /* deep dark brown — high contrast on honey cards */
+  color: var(--word-item-color);
   transition: color .25s;
 }
 
@@ -753,19 +810,19 @@ body {
   flex-shrink: 0;
 }
 
-/* Override btn-secondary inside sidebar for warm look */
+/* Override btn-secondary inside sidebar for themed look */
 .sidebar-footer .btn-secondary {
-  background: rgba(195, 148, 60, 0.82);
-  border-color: rgba(160, 110, 30, 0.55);
-  color: #2a1200;
+  background: var(--hint-btn-bg);
+  border-color: var(--hint-btn-border);
+  color: var(--hint-btn-color);
   font-weight: 900;
-  box-shadow: 0 3px 12px rgba(0,0,0,.18), 0 1px 0 rgba(255,220,120,.4) inset;
+  box-shadow: 0 3px 12px rgba(0,0,0,.18), 0 1px 0 var(--hint-btn-inset) inset;
 }
 
 .sidebar-footer .btn-secondary .hint-badge {
-  background: rgba(140, 80, 10, 0.90);
-  border-color: rgba(180, 110, 20, 0.70);
-  color: #ffe08a;
+  background: var(--hint-badge-bg);
+  border-color: var(--hint-badge-border);
+  color: var(--hint-badge-color);
 }
 
 /* ════════════════════════════════════════════
@@ -896,6 +953,8 @@ body {
   --accent:        #dfac42;   /* champagne gold */
   --accent-light:  #fada8c;
   --accent-dark:   #ad8228;
+  --accent-shadow: rgba(223, 172, 66, 0.4);
+
   --text:          #e2e2e5;
   --text-mid:      #b4b4b8;
   --text-dim:      #828286;
@@ -915,6 +974,65 @@ body {
 
   --cell-bg:       rgba(60, 60, 65, 0.90);
   --cell-border:   rgba(120, 120, 130, 0.35);
+
+  /* topbar and headers */
+  --topbar-bg:     rgba(20, 20, 24, 0.82);
+  --topbar-border: rgba(100, 100, 110, 0.45);
+  --topbar-title-color: #dfac42;
+
+  /* stat chips */
+  --stat-chip-bg:           rgba(50, 50, 55, 0.85);
+  --stat-chip-border:       rgba(100, 100, 110, 0.55);
+  --stat-chip-value-color:   #e2e2e5;
+  --stat-chip-accent-bg:     rgba(173, 130, 40, 0.85);
+  --stat-chip-accent-border: rgba(223, 172, 66, 0.55);
+
+  /* game board */
+  --board-bg:           rgba(45, 45, 50, 0.92);
+  --board-border:       rgba(100, 100, 110, 0.55);
+  --board-inset-glow:   rgba(255, 255, 255, 0.05);
+  --board-inner-shadow: rgba(0, 0, 0, 0.15);
+
+  /* cell & interactions */
+  --cell-hover-bg:      rgba(80, 80, 85, 0.95);
+  --cell-hover-border:  rgba(140, 140, 150, 0.55);
+  --cell-hover-shadow:  rgba(0, 0, 0, 0.2);
+
+  /* cell hint pulse */
+  --hint-pulse-bg-0:     rgba(223, 172, 66, 0.25);
+  --hint-pulse-border-0: rgba(223, 172, 66, 0.55);
+  --hint-pulse-shadow-0: rgba(223, 172, 66, 0.2);
+  --hint-pulse-bg-50:    rgba(223, 172, 66, 0.75);
+  --hint-pulse-border-50: rgba(223, 172, 66, 1.0);
+  --hint-pulse-shadow-50: rgba(223, 172, 66, 0.45);
+  --hint-pulse-text-50:   #121214;
+
+  /* progress pill */
+  --progress-pill-bg:     rgba(38, 38, 42, 0.94);
+  --progress-pill-border: rgba(100, 100, 110, 0.4);
+  --progress-pill-color:  var(--accent);
+
+  /* word list item */
+  --word-item-bg:       rgba(45, 45, 50, 0.80);
+  --word-item-border:   rgba(100, 100, 110, 0.45);
+  --word-item-inset:    rgba(255, 255, 255, 0.1);
+  --word-item-color:    #e2e2e5;
+  --word-check-border:  rgba(100, 100, 110, 0.55);
+  --word-check-bg:      rgba(255, 255, 255, 0.05);
+
+  /* hint button inside sidebar */
+  --hint-btn-bg:        rgba(55, 55, 60, 0.90);
+  --hint-btn-border:    rgba(100, 100, 110, 0.55);
+  --hint-btn-color:     #e2e2e5;
+  --hint-btn-inset:     rgba(255, 255, 255, 0.08);
+  --hint-badge-bg:      rgba(173, 130, 40, 0.90);
+  --hint-badge-border:  rgba(223, 172, 66, 0.70);
+  --hint-badge-color:   #fff5d0;
+
+  --overlay-bg:         rgba(15, 15, 18, 0.75);
+  --btn-google-bg:      rgba(38, 38, 42, 0.92);
+  --btn-google-border:  rgba(100, 100, 110, 0.35);
+  --btn-google-color:   #e2e2e5;
 }
 
 [data-theme="charcoal"] body,
@@ -932,6 +1050,8 @@ body {
   --accent:        #00ff66;   /* matrix neon green */
   --accent-light:  #99ffbb;
   --accent-dark:   #00b344;
+  --accent-shadow: rgba(0, 255, 102, 0.4);
+
   --text:          #d5fadc;
   --text-mid:      #88d99c;
   --text-dim:      #50a667;
@@ -951,6 +1071,65 @@ body {
 
   --cell-bg:       rgba(12, 38, 20, 0.90);
   --cell-border:   rgba(0, 255, 100, 0.35);
+
+  /* topbar and headers */
+  --topbar-bg:     rgba(1, 12, 4, 0.85);
+  --topbar-border: rgba(0, 255, 100, 0.35);
+  --topbar-title-color: #00ff66;
+
+  /* stat chips */
+  --stat-chip-bg:           rgba(5, 24, 12, 0.85);
+  --stat-chip-border:       rgba(0, 255, 100, 0.35);
+  --stat-chip-value-color:   #d5fadc;
+  --stat-chip-accent-bg:     rgba(0, 150, 50, 0.85);
+  --stat-chip-accent-border: rgba(0, 255, 100, 0.5);
+
+  /* game board */
+  --board-bg:           rgba(4, 18, 9, 0.92);
+  --board-border:       rgba(0, 255, 100, 0.35);
+  --board-inset-glow:   rgba(0, 255, 100, 0.1);
+  --board-inner-shadow: rgba(0, 0, 0, 0.25);
+
+  /* cell & interactions */
+  --cell-hover-bg:      rgba(16, 50, 26, 0.95);
+  --cell-hover-border:  rgba(0, 255, 100, 0.55);
+  --cell-hover-shadow:  rgba(0, 255, 100, 0.25);
+
+  /* cell hint pulse */
+  --hint-pulse-bg-0:     rgba(0, 255, 100, 0.25);
+  --hint-pulse-border-0: rgba(0, 255, 100, 0.55);
+  --hint-pulse-shadow-0: rgba(0, 255, 100, 0.2);
+  --hint-pulse-bg-50:    rgba(0, 255, 100, 0.75);
+  --hint-pulse-border-50: rgba(0, 255, 100, 1.0);
+  --hint-pulse-shadow-50: rgba(0, 255, 100, 0.45);
+  --hint-pulse-text-50:   #020d05;
+
+  /* progress pill */
+  --progress-pill-bg:     rgba(4, 18, 9, 0.94);
+  --progress-pill-border: rgba(0, 255, 100, 0.35);
+  --progress-pill-color:  var(--accent);
+
+  /* word list item */
+  --word-item-bg:       rgba(5, 18, 10, 0.80);
+  --word-item-border:   rgba(0, 255, 100, 0.25);
+  --word-item-inset:    rgba(0, 255, 100, 0.1);
+  --word-item-color:    #d5fadc;
+  --word-check-border:  rgba(0, 255, 100, 0.35);
+  --word-check-bg:      rgba(0, 255, 100, 0.05);
+
+  /* hint button inside sidebar */
+  --hint-btn-bg:        rgba(10, 34, 18, 0.90);
+  --hint-btn-border:    rgba(0, 255, 100, 0.35);
+  --hint-btn-color:     #d5fadc;
+  --hint-btn-inset:     rgba(0, 255, 100, 0.1);
+  --hint-badge-bg:      rgba(0, 150, 50, 0.90);
+  --hint-badge-border:  rgba(0, 255, 100, 0.55);
+  --hint-badge-color:   #99ffbb;
+
+  --overlay-bg:         rgba(1, 10, 3, 0.8);
+  --btn-google-bg:      rgba(10, 34, 18, 0.92);
+  --btn-google-border:  rgba(0, 255, 100, 0.25);
+  --btn-google-color:   #d5fadc;
 }
 
 [data-theme="neon"] body,
@@ -968,6 +1147,8 @@ body {
   --accent:        #2e7d32;   /* classic forest green */
   --accent-light:  #66bb6a;
   --accent-dark:   #1b5e20;
+  --accent-shadow: rgba(46, 125, 50, 0.4);
+
   --text:          #2b3a2d;
   --text-mid:      #4d5c4f;
   --text-dim:      #7a8c7c;
@@ -987,6 +1168,65 @@ body {
 
   --cell-bg:       rgba(220, 240, 225, 0.90);
   --cell-border:   rgba(100, 130, 105, 0.35);
+
+  /* topbar and headers */
+  --topbar-bg:     rgba(40, 60, 45, 0.82);
+  --topbar-border: rgba(80, 110, 85, 0.45);
+  --topbar-title-color: #66bb6a;
+
+  /* stat chips */
+  --stat-chip-bg:           rgba(200, 220, 205, 0.85);
+  --stat-chip-border:       rgba(80, 110, 85, 0.45);
+  --stat-chip-value-color:   #2b3a2d;
+  --stat-chip-accent-bg:     rgba(46, 125, 50, 0.85);
+  --stat-chip-accent-border: rgba(80, 110, 85, 0.55);
+
+  /* game board */
+  --board-bg:           rgba(210, 230, 215, 0.92);
+  --board-border:       rgba(80, 110, 85, 0.55);
+  --board-inset-glow:   rgba(255, 255, 255, 0.4);
+  --board-inner-shadow: rgba(0, 0, 0, 0.08);
+
+  /* cell & interactions */
+  --cell-hover-bg:      rgba(195, 220, 200, 0.95);
+  --cell-hover-border:  rgba(80, 110, 85, 0.55);
+  --cell-hover-shadow:  rgba(80, 110, 85, 0.2);
+
+  /* cell hint pulse */
+  --hint-pulse-bg-0:     rgba(102, 187, 106, 0.25);
+  --hint-pulse-border-0: rgba(46, 125, 50, 0.55);
+  --hint-pulse-shadow-0: rgba(46, 125, 50, 0.2);
+  --hint-pulse-bg-50:    rgba(102, 187, 106, 0.75);
+  --hint-pulse-border-50: rgba(46, 125, 50, 1.0);
+  --hint-pulse-shadow-50: rgba(46, 125, 50, 0.45);
+  --hint-pulse-text-50:   #1b5e20;
+
+  /* progress pill */
+  --progress-pill-bg:     rgba(222, 238, 225, 0.94);
+  --progress-pill-border: rgba(80, 110, 85, 0.4);
+  --progress-pill-color:  var(--accent-dark);
+
+  /* word list item */
+  --word-item-bg:       rgba(200, 225, 205, 0.75);
+  --word-item-border:   rgba(80, 110, 85, 0.45);
+  --word-item-inset:    rgba(255, 255, 255, 0.3);
+  --word-item-color:    #2b3a2d;
+  --word-check-border:  rgba(80, 110, 85, 0.45);
+  --word-check-bg:      rgba(255, 255, 255, 0.3);
+
+  /* hint button inside sidebar */
+  --hint-btn-bg:        rgba(180, 210, 185, 0.90);
+  --hint-btn-border:    rgba(80, 110, 85, 0.55);
+  --hint-btn-color:     #2b3a2d;
+  --hint-btn-inset:     rgba(255, 255, 255, 0.3);
+  --hint-badge-bg:      rgba(46, 125, 50, 0.90);
+  --hint-badge-border:  rgba(80, 110, 85, 0.70);
+  --hint-badge-color:   #d8f3db;
+
+  --overlay-bg:         rgba(15, 35, 20, 0.55);
+  --btn-google-bg:      rgba(222, 238, 225, 0.92);
+  --btn-google-border:  rgba(80, 110, 85, 0.35);
+  --btn-google-color:   #2b3a2d;
 }
 
 [data-theme="mint"] body,

@@ -141,6 +141,21 @@ googleBtn.addEventListener('click', async () => {
   }
 });
 
+// ── Guest Mode ────────────────────────────────────
+const guestBtn = document.getElementById('guestBtn');
+if (guestBtn) {
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  if (!FIREBASE_READY || isLocal) {
+    guestBtn.classList.remove('hidden');
+  } else {
+    guestBtn.classList.add('hidden');
+  }
+  guestBtn.addEventListener('click', () => {
+    saveMockUser('Guest Player', 'guest@example.com');
+    goToMenu();
+  });
+}
+
 // ── Friendly error messages ───────────────────────
 function friendlyError(err) {
   if (!err) return 'An unknown error occurred.';
