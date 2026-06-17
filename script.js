@@ -256,6 +256,7 @@ const gameTimerVal  = $('gameTimerVal');
 const gameModeTitle = $('gameModeTitle');
 const gameModeLabel = $('gameModeLabel');
 const exitToMenuBtn = $('exitToMenuBtn');
+const welcomeCloseBtn = $('welcomeCloseBtn');
 
 if (gameModeTitle) {
   gameModeTitle.textContent = isHiddenMode ? 'Dark Pool — Hidden' : 'Dark Pool — Classic';
@@ -694,6 +695,12 @@ if (winLeaderboardBtn) {
 if (exitToMenuBtn) {
   exitToMenuBtn.addEventListener('click', () => {
     clearInterval(shuffleTimer);
+    window.location.href = 'menu.html';
+  });
+}
+
+if (welcomeCloseBtn) {
+  welcomeCloseBtn.addEventListener('click', () => {
     window.location.href = 'menu.html';
   });
 }

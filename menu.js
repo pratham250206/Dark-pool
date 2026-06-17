@@ -135,6 +135,13 @@ if (menuSettingsBtn && settingsOverlay && closeSettingsBtn) {
 
     settingsOverlay.classList.add('hidden');
   });
+
+  const settingsCloseBtn = document.getElementById('settingsCloseBtn');
+  if (settingsCloseBtn) {
+    settingsCloseBtn.addEventListener('click', () => {
+      settingsOverlay.classList.add('hidden');
+    });
+  }
 }
 
 // ── Leaderboards Overlay Handling ──
@@ -265,6 +272,13 @@ if (menuLeaderboardBtn && leaderboardOverlay && closeLeaderboardBtn) {
   closeLeaderboardBtn.addEventListener('click', () => {
     leaderboardOverlay.classList.add('hidden');
   });
+
+  const leaderboardCloseBtn = document.getElementById('leaderboardCloseBtn');
+  if (leaderboardCloseBtn) {
+    leaderboardCloseBtn.addEventListener('click', () => {
+      leaderboardOverlay.classList.add('hidden');
+    });
+  }
 
   tabClassicLeaderboard.addEventListener('click', () => {
     if (activeLeaderboardTab !== 'classic') {
